@@ -1,5 +1,6 @@
 package io.github.coffeecatrailway.food.common.item;
 
+import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Pair;
 import io.github.coffeecatrailway.food.DataGen;
 import io.github.coffeecatrailway.food.FoodMod;
@@ -102,7 +103,7 @@ public class FoodComboItem extends Item
 				player.getFoodData().eat(food);
 			}
 
-			//TODO handle ingredient effects
+			//TODO potions, convert to items (bowls, bottles, etc)
 		}
 		stack.getOrDefault(ModComponents.FOOD_COMBO, FoodComboComponent.EMPTY).ingredients().forEach(itemStack -> itemStack.finishUsingItem(level, entity));
 		return stack;
@@ -132,22 +133,27 @@ public class FoodComboItem extends Item
 	{
 		float nutrition = 0.f;
 		float saturation = 0.f;
+		float eatSeconds = 0.f;
+		ImmutableList.Builder<FoodProperties.PossibleEffect> effects = ImmutableList.builder();
 
 		for (FoodProperties prop: foods)
 		{
 			nutrition += prop.nutrition();
 			saturation += prop.saturation();
-			// effects and others
+			eatSeconds += prop.eatSeconds();
+			effects.addAll(prop.effects());
 		}
 
-		nutrition *= 1.f / foods.size();
-		saturation *= 1.f / foods.size();
+		float avg = 1.f / foods.size();
+		nutrition *= avg;
+		saturation *= avg;
+		eatSeconds *= avg;
 		if (cooked)
 		{
 			nutrition *= (float) ModConfig.COOKED_FOOD_MODIFIER;
 			saturation *= (float) ModConfig.COOKED_FOOD_MODIFIER;
 		}
-		return new FoodProperties.Builder().nutrition(Math.round(nutrition)).saturationModifier(saturation).build();
+		return new FoodProperties(Math.round(nutrition), saturation, false, eatSeconds, Optional.empty(), effects.build());
 	}
 
 	public static class FoodComboProperties
