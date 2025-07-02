@@ -10,9 +10,9 @@ import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.TieredItem;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 
-public class ItemCraftingTool extends TieredItem
+public class CraftingToolItem extends TieredItem
 {
-	public ItemCraftingTool(Tier tier, Properties properties)
+	public CraftingToolItem(Tier tier, Properties properties)
 	{
 		super(tier, properties);
 	}

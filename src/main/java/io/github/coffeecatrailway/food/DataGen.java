@@ -1,11 +1,14 @@
 package io.github.coffeecatrailway.food;
 
 import io.github.coffeecatrailway.food.common.item.ModItems;
+import io.github.coffeecatrailway.food.common.item.crafting.SandwichRecipe;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -70,6 +73,17 @@ public class DataGen
 			this.add(ModItems.KNIFE_IRON.get(), "Iron Knife");
 			this.add(ModItems.KNIFE_DIAMOND.get(), "Diamond Knife");
 			this.add(ModItems.KNIFE_NETHERITE.get(), "Netherite Knife");
+
+			this.add("item." + FoodMod.MODID + ".food_combo.info", "to show ingredients");
+			this.add(ModItems.SANDWICH.get(), "Sandwich");
+			this.add("item." + FoodMod.MODID + ".sandwich.toasted", "Toasted");
+
+			this.add("tooltip." + FoodMod.MODID + ".hold_shift", "[HOLD SHIFT %s]");
+		}
+
+		public static MutableComponent shiftInfo(Object info)
+		{
+			return Component.translatable( "tooltip." + FoodMod.MODID + ".hold_shift", info);
 		}
 	}
 
@@ -86,6 +100,8 @@ public class DataGen
 			ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, ModItems.BREAD_SLICE, ModItems.SLICE_PER_BREAD).requires(Items.BREAD).requires(ItemTag.KNIFES).unlockedBy("has_bread", has(Items.BREAD)).save(recipeOutput);
 
 			this.cookedFood(ModItems.BREAD_SLICE, ModItems.TOAST, .35f, 200, recipeOutput);
+
+			SpecialRecipeBuilder.special(SandwichRecipe::new).save(recipeOutput, FoodMod.id("sandwich"));
 
 			this.knife(ModItems.KNIFE_WOODEN, ItemTags.PLANKS, recipeOutput);
 			this.knife(ModItems.KNIFE_STONE, Items.STONE, recipeOutput);

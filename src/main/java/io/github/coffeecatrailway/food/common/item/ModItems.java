@@ -2,14 +2,20 @@ package io.github.coffeecatrailway.food.common.item;
 
 import com.mojang.logging.LogUtils;
 import io.github.coffeecatrailway.food.FoodMod;
+import io.github.coffeecatrailway.food.ModConfig;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.food.Foods;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.Tiers;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.slf4j.Logger;
+
+import java.util.List;
 
 /**
  * @author CoffeeCatRailway
@@ -21,23 +27,25 @@ public class ModItems
 	public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(FoodMod.MODID);
 
 	public static final int SLICE_PER_BREAD = 4;
-	public static final FoodProperties FOOD_BREAD_SLICE = new FoodProperties.Builder().alwaysEdible().nutrition(Foods.BREAD.nutrition() / SLICE_PER_BREAD).saturationModifier(Foods.BREAD.saturation() / (float) SLICE_PER_BREAD).build();
-	public static final FoodProperties FOOD_TOAST = new FoodProperties.Builder().alwaysEdible().nutrition((int) (FOOD_BREAD_SLICE.nutrition() * 1.5f)).saturationModifier(FOOD_BREAD_SLICE.saturation() * 1.5f).build();
+	public static final FoodProperties FOOD_BREAD_SLICE = new FoodProperties.Builder().nutrition(Foods.BREAD.nutrition() / SLICE_PER_BREAD).saturationModifier(Foods.BREAD.saturation() / (float) SLICE_PER_BREAD).build();
+	public static final FoodProperties FOOD_TOAST = new FoodProperties.Builder().nutrition((int) (FOOD_BREAD_SLICE.nutrition() * 1.5f)).saturationModifier(FOOD_BREAD_SLICE.saturation() * 1.5f).build();
 
 	public static final DeferredItem<Item> BREAD_SLICE = ITEMS.registerSimpleItem("bread_slice", new Item.Properties().food(FOOD_BREAD_SLICE));
 	public static final DeferredItem<Item> TOAST = ITEMS.registerSimpleItem("toast", new Item.Properties().food(FOOD_TOAST));
 
-	public static final DeferredItem<ItemCraftingTool> KNIFE_WOODEN = ITEMS.registerItem("knife_wooden", prop -> itemCraftingTool(prop, Tiers.WOOD, 1.f, -2.5f));
-	public static final DeferredItem<ItemCraftingTool> KNIFE_STONE = ITEMS.registerItem("knife_stone", prop -> itemCraftingTool(prop, Tiers.STONE, 1.f, -2.5f));
-	public static final DeferredItem<ItemCraftingTool> KNIFE_COPPER = ITEMS.registerItem("knife_copper", prop -> itemCraftingTool(prop, Tiers.STONE, 1.f, -2.5f));
-	public static final DeferredItem<ItemCraftingTool> KNIFE_GOLD = ITEMS.registerItem("knife_gold", prop -> itemCraftingTool(prop, Tiers.GOLD, 1.f, -2.5f));
-	public static final DeferredItem<ItemCraftingTool> KNIFE_IRON = ITEMS.registerItem("knife_iron", prop -> itemCraftingTool(prop, Tiers.IRON, 1.f, -2.5f));
-	public static final DeferredItem<ItemCraftingTool> KNIFE_DIAMOND = ITEMS.registerItem("knife_diamond", prop -> itemCraftingTool(prop, Tiers.DIAMOND, 1.f, -2.5f));
-	public static final DeferredItem<ItemCraftingTool> KNIFE_NETHERITE = ITEMS.registerItem("knife_netherite", prop -> itemCraftingTool(prop, Tiers.NETHERITE, 1.f, -2.5f));
+	public static final DeferredItem<SandwichItem> SANDWICH = ITEMS.registerItem("sandwich", SandwichItem::new);
 
-	private static ItemCraftingTool itemCraftingTool(Item.Properties prop, Tier tier, float attackDamage, float attackSpeed)
+	public static final DeferredItem<CraftingToolItem> KNIFE_WOODEN = ITEMS.registerItem("knife_wooden", prop -> itemCraftingTool(prop, Tiers.WOOD, 1.f, -2.5f));
+	public static final DeferredItem<CraftingToolItem> KNIFE_STONE = ITEMS.registerItem("knife_stone", prop -> itemCraftingTool(prop, Tiers.STONE, 1.f, -2.5f));
+	public static final DeferredItem<CraftingToolItem> KNIFE_COPPER = ITEMS.registerItem("knife_copper", prop -> itemCraftingTool(prop, Tiers.STONE, 1.f, -2.5f));
+	public static final DeferredItem<CraftingToolItem> KNIFE_GOLD = ITEMS.registerItem("knife_gold", prop -> itemCraftingTool(prop, Tiers.GOLD, 1.f, -2.5f));
+	public static final DeferredItem<CraftingToolItem> KNIFE_IRON = ITEMS.registerItem("knife_iron", prop -> itemCraftingTool(prop, Tiers.IRON, 1.f, -2.5f));
+	public static final DeferredItem<CraftingToolItem> KNIFE_DIAMOND = ITEMS.registerItem("knife_diamond", prop -> itemCraftingTool(prop, Tiers.DIAMOND, 1.f, -2.5f));
+	public static final DeferredItem<CraftingToolItem> KNIFE_NETHERITE = ITEMS.registerItem("knife_netherite", prop -> itemCraftingTool(prop, Tiers.NETHERITE, 1.f, -2.5f));
+
+	private static CraftingToolItem itemCraftingTool(Item.Properties prop, Tier tier, float attackDamage, float attackSpeed)
 	{
-		return new ItemCraftingTool(tier, prop.durability(tier.getUses() / 2).attributes(ItemCraftingTool.createAttributes(tier, attackDamage, attackSpeed)));
+		return new CraftingToolItem(tier, prop.durability(tier.getUses() / 2).attributes(CraftingToolItem.createAttributes(tier, attackDamage, attackSpeed)));
 	}
 
 	public static void init(IEventBus modEventBus)
