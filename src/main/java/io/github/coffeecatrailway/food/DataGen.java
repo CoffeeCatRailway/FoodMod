@@ -1,5 +1,6 @@
 package io.github.coffeecatrailway.food;
 
+import io.github.coffeecatrailway.food.common.ModFoods;
 import io.github.coffeecatrailway.food.common.item.ModItems;
 import io.github.coffeecatrailway.food.common.item.crafting.SandwichRecipe;
 import net.minecraft.core.HolderLookup;
@@ -97,7 +98,7 @@ public class DataGen
 		@Override
 		protected void buildRecipes(RecipeOutput recipeOutput)
 		{
-			ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, ModItems.BREAD_SLICE, ModItems.SLICE_PER_BREAD).requires(Items.BREAD).requires(ItemTag.KNIFES).unlockedBy("has_bread", has(Items.BREAD)).save(recipeOutput);
+			ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, ModItems.BREAD_SLICE, ModFoods.SLICE_PER_BREAD).requires(Items.BREAD).requires(ItemTag.KNIFES).unlockedBy("has_bread", has(Items.BREAD)).save(recipeOutput);
 
 			this.cookedFood(ModItems.BREAD_SLICE, ModItems.TOAST, .35f, 200, recipeOutput);
 

@@ -3,12 +3,10 @@ package io.github.coffeecatrailway.food.common.item;
 import com.mojang.logging.LogUtils;
 import io.github.coffeecatrailway.food.FoodMod;
 import io.github.coffeecatrailway.food.ModConfig;
+import io.github.coffeecatrailway.food.common.ModFoods;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.food.Foods;
-import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Tier;
-import net.minecraft.world.item.Tiers;
+import net.minecraft.world.item.*;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.registries.DeferredItem;
@@ -26,12 +24,8 @@ public class ModItems
 	private static final Logger LOGGER = LogUtils.getLogger();
 	public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(FoodMod.MODID);
 
-	public static final int SLICE_PER_BREAD = 4;
-	public static final FoodProperties FOOD_BREAD_SLICE = new FoodProperties.Builder().nutrition(Foods.BREAD.nutrition() / SLICE_PER_BREAD).saturationModifier(Foods.BREAD.saturation() / (float) SLICE_PER_BREAD).build();
-	public static final FoodProperties FOOD_TOAST = new FoodProperties.Builder().nutrition((int) (FOOD_BREAD_SLICE.nutrition() * 1.5f)).saturationModifier(FOOD_BREAD_SLICE.saturation() * 1.5f).build();
-
-	public static final DeferredItem<Item> BREAD_SLICE = ITEMS.registerSimpleItem("bread_slice", new Item.Properties().food(FOOD_BREAD_SLICE));
-	public static final DeferredItem<Item> TOAST = ITEMS.registerSimpleItem("toast", new Item.Properties().food(FOOD_TOAST));
+	public static final DeferredItem<Item> BREAD_SLICE = ITEMS.registerSimpleItem("bread_slice", new Item.Properties().food(ModFoods.FOOD_BREAD_SLICE));
+	public static final DeferredItem<Item> TOAST = ITEMS.registerSimpleItem("toast", new Item.Properties().food(ModFoods.FOOD_TOAST));
 
 	public static final DeferredItem<SandwichItem> SANDWICH = ITEMS.registerItem("sandwich", SandwichItem::new);
 
@@ -61,8 +55,8 @@ public class ModItems
 		if (event.getTabKey() == CreativeModeTabs.FOOD_AND_DRINKS)
 		{
 			LOGGER.info("Adding food items to tabs");
-			event.accept(BREAD_SLICE);
-			event.accept(TOAST);
+			event.insertAfter(new ItemStack(Items.BREAD), new ItemStack(BREAD_SLICE.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+			event.insertAfter(new ItemStack(BREAD_SLICE.get()), new ItemStack(TOAST.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
 		} else if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES)
 		{
 			LOGGER.info("Adding tool items to tabs");

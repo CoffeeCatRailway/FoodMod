@@ -1,10 +1,9 @@
 package io.github.coffeecatrailway.food.common.item;
 
-import com.google.common.collect.ImmutableList;
-import com.mojang.datafixers.util.Pair;
 import io.github.coffeecatrailway.food.DataGen;
 import io.github.coffeecatrailway.food.FoodMod;
 import io.github.coffeecatrailway.food.ModConfig;
+import io.github.coffeecatrailway.food.common.ModFoods;
 import io.github.coffeecatrailway.food.common.item.component.FoodComboComponent;
 import io.github.coffeecatrailway.food.common.item.component.ModComponents;
 import net.minecraft.ChatFormatting;
@@ -25,7 +24,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
 /**
  * @author CoffeeCatRailway
@@ -84,29 +82,35 @@ public class FoodComboItem extends Item
 			tooltipComponents.add(DataGen.Language.shiftInfo(Component.translatable("item." + FoodMod.MODID + ".food_combo.info")).withStyle(ChatFormatting.DARK_GRAY));
 	}
 
+//	@Override
+//	public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entity)
+//	{
+//		if (!level.isClientSide())
+//		{
+//			SoundEvent sound = SoundEvents.GENERIC_EAT;
+//			Supplier<Float> pitch = () -> 1.f + (level.getRandom().nextFloat() - level.getRandom().nextFloat()) * .4f;
+//
+//			entity.playSound(sound, 1f, pitch.get());
+//			level.playSound(entity, entity.getOnPos(), sound, SoundSource.NEUTRAL, 1f, pitch.get());
+//
+//			FoodProperties food = this.getFood(stack, entity);
+//			if (entity instanceof Player player)
+//			{
+//				if (!player.isCreative())
+//					stack.shrink(1);
+//				player.getFoodData().eat(food);
+//			}
+//
+//			//TODO potions, convert to items (bowls, bottles, etc)
+//		}
+//		stack.getOrDefault(ModComponents.FOOD_COMBO, FoodComboComponent.EMPTY).ingredients().forEach(itemStack -> itemStack.finishUsingItem(level, entity));
+//		return stack;
+//	}
+
 	@Override
-	public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entity)
+	public @Nullable FoodProperties getFoodProperties(ItemStack stack, @Nullable LivingEntity entity)
 	{
-		if (!level.isClientSide())
-		{
-			SoundEvent sound = SoundEvents.GENERIC_EAT;
-			Supplier<Float> pitch = () -> 1.f + (level.getRandom().nextFloat() - level.getRandom().nextFloat()) * .4f;
-
-			entity.playSound(sound, 1f, pitch.get());
-			level.playSound(entity, entity.getOnPos(), sound, SoundSource.NEUTRAL, 1f, pitch.get());
-
-			FoodProperties food = this.getFood(stack, entity);
-			if (entity instanceof Player player)
-			{
-				if (!player.isCreative())
-					stack.shrink(1);
-				player.getFoodData().eat(food);
-			}
-
-			//TODO potions, convert to items (bowls, bottles, etc)
-		}
-		stack.getOrDefault(ModComponents.FOOD_COMBO, FoodComboComponent.EMPTY).ingredients().forEach(itemStack -> itemStack.finishUsingItem(level, entity));
-		return stack;
+		return this.getFood(stack, entity);
 	}
 
 	public FoodProperties getFood(ItemStack stack, @Nullable LivingEntity entity)
@@ -119,41 +123,15 @@ public class FoodComboItem extends Item
 		if (this.foodComboProperties.hasTwoBuns)
 			foods.add(bunFood);
 
-		if (!data.ingredients().isEmpty())
-			data.ingredients().forEach(itemStack -> {
-				FoodProperties foodProperties = itemStack.getFoodProperties(entity);
-				if (foodProperties != null && foodProperties.canAlwaysEat())
-					foods.add(foodProperties);
-			});
+		data.ingredients().forEach(itemStack -> {
+			FoodProperties foodProperties = itemStack.getFoodProperties(entity);
+			if (foodProperties != null)
+				foods.add(foodProperties);
+		});
 
-		return foodAverage(foods, data.toasted());
-	}
-
-	private FoodProperties foodAverage(List<FoodProperties> foods, boolean cooked)
-	{
-		float nutrition = 0.f;
-		float saturation = 0.f;
-		float eatSeconds = 0.f;
-		ImmutableList.Builder<FoodProperties.PossibleEffect> effects = ImmutableList.builder();
-
-		for (FoodProperties prop: foods)
-		{
-			nutrition += prop.nutrition();
-			saturation += prop.saturation();
-			eatSeconds += prop.eatSeconds();
-			effects.addAll(prop.effects());
-		}
-
-		float avg = 1.f / foods.size();
-		nutrition *= avg;
-		saturation *= avg;
-		eatSeconds *= avg;
-		if (cooked)
-		{
-			nutrition *= (float) ModConfig.COOKED_FOOD_MODIFIER;
-			saturation *= (float) ModConfig.COOKED_FOOD_MODIFIER;
-		}
-		return new FoodProperties(Math.round(nutrition), saturation, false, eatSeconds, Optional.empty(), effects.build());
+		if (ModConfig.INGREDIENT_AVERAGE)
+			return ModFoods.average(data.toasted(), foods.toArray(new FoodProperties[0]));
+		return ModFoods.combine((float) ModConfig.NUTRITION_MODIFIER, (float) ModConfig.SATURATION_MODIFIER, data.toasted(), foods.toArray(new FoodProperties[0]));
 	}
 
 	public static class FoodComboProperties
