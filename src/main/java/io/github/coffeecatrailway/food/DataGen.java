@@ -3,6 +3,8 @@ package io.github.coffeecatrailway.food;
 import io.github.coffeecatrailway.food.common.ModFoods;
 import io.github.coffeecatrailway.food.common.item.ModItems;
 import io.github.coffeecatrailway.food.common.item.crafting.SandwichRecipe;
+import io.github.coffeecatrailway.food.config.FoodConfigClient;
+import io.github.coffeecatrailway.food.config.FoodConfigs;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
@@ -18,6 +20,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
+import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.common.data.LanguageProvider;
@@ -82,6 +85,22 @@ public class DataGen
 			this.add("item." + FoodMod.MODID + ".sandwich.toasted", "Toasted");
 
 			this.add("tooltip." + FoodMod.MODID + ".hold_shift", "[HOLD SHIFT %s]");
+
+			this.add(FoodMod.MODID + ".configuration.sandwich", "Sandwich");
+			this.addConfig(FoodConfigs.CLIENT.rotateIngredients, "Rotate Ingredients");
+			this.addConfig(FoodConfigs.CLIENT.showNutritionSaturation, "Show Nutrition/Saturation");
+
+			this.addConfig(FoodConfigs.SERVER.allowPotions, "Allow Potions");
+			this.addConfig(FoodConfigs.SERVER.toastedModifier, "Toasted Modifier");
+			this.addConfig(FoodConfigs.SERVER.averageIngredients, "Average Ingredients");
+			this.add(FoodMod.MODID + ".configuration.combinedModifiers", "Combined Modifiers");
+			this.addConfig(FoodConfigs.SERVER.nutritionModifier, "Nutrition Modifier");
+			this.addConfig(FoodConfigs.SERVER.saturationModifier, "Saturation Modifier");
+		}
+
+		private void addConfig(ModConfigSpec.ConfigValue<?> config, String name)
+		{
+			this.add(FoodMod.MODID + ".configuration." + config.getPath().getLast(), name);
 		}
 
 		public static MutableComponent shiftInfo(Object info)

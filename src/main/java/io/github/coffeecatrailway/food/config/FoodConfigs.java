@@ -3,6 +3,9 @@ package io.github.coffeecatrailway.food.config;
 import com.mojang.logging.LogUtils;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.neoforge.client.gui.ConfigurationScreen;
+import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
@@ -31,6 +34,8 @@ public final class FoodConfigs
 
 	public static void init(ModContainer modContainer)
 	{
+		modContainer.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
+
 		LOGGER.info("Configurating...");
 		modContainer.registerConfig(ModConfig.Type.CLIENT, CLIENT_CONFIG_SPEC);
 		modContainer.registerConfig(ModConfig.Type.SERVER, SERVER_CONFIG_SPEC);

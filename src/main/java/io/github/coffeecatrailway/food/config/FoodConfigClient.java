@@ -6,7 +6,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
  * @author CoffeeCatRailway
  * Created: 05/07/2025
  */
-public class FoodConfigClient
+public final class FoodConfigClient
 {
 	public final ModConfigSpec.BooleanValue rotateIngredients;
 	public final ModConfigSpec.BooleanValue showNutritionSaturation;
