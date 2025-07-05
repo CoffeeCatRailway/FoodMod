@@ -5,6 +5,7 @@ import io.github.coffeecatrailway.food.client.extensions.common.SandwichExtensio
 import io.github.coffeecatrailway.food.common.item.ModItems;
 import io.github.coffeecatrailway.food.common.item.component.ModComponents;
 import io.github.coffeecatrailway.food.common.item.crafting.ModRecipes;
+import io.github.coffeecatrailway.food.config.FoodConfigs;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
@@ -37,7 +38,7 @@ public class FoodMod
 		modEventBus.addListener(this::onGatherData);
 //		NeoForge.EVENT_BUS.addListener(FoodMod::registerGeometryLoaders);
 
-		modContainer.registerConfig(net.neoforged.fml.config.ModConfig.Type.COMMON, ModConfig.SPEC);
+		FoodConfigs.init(modContainer);
 	}
 
 	public void clientExt(RegisterClientExtensionsEvent event)

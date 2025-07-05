@@ -1,11 +1,10 @@
 package io.github.coffeecatrailway.food.common;
 
 import com.google.common.collect.ImmutableList;
-import io.github.coffeecatrailway.food.ModConfig;
+import io.github.coffeecatrailway.food.config.FoodConfigs;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.food.Foods;
 
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -45,8 +44,8 @@ public class ModFoods
 
 		if (cooked)
 		{
-			nutrition *= (float) ModConfig.COOKED_FOOD_MODIFIER;
-			saturation *= (float) ModConfig.COOKED_FOOD_MODIFIER;
+			nutrition *= (float) FoodConfigs.SERVER.toastedModifier.getAsDouble();
+			saturation *= (float) FoodConfigs.SERVER.toastedModifier.getAsDouble();
 		}
 		return new FoodProperties(Math.round(nutrition), saturation, false, eatSeconds, Optional.empty(), effects.build());
 	}

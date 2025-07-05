@@ -2,28 +2,23 @@ package io.github.coffeecatrailway.food.common.item;
 
 import io.github.coffeecatrailway.food.DataGen;
 import io.github.coffeecatrailway.food.FoodMod;
-import io.github.coffeecatrailway.food.ModConfig;
 import io.github.coffeecatrailway.food.common.ModFoods;
 import io.github.coffeecatrailway.food.common.item.component.FoodComboComponent;
 import io.github.coffeecatrailway.food.common.item.component.ModComponents;
+import io.github.coffeecatrailway.food.config.FoodConfigs;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.ItemLike;
-import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
-import java.util.function.Supplier;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author CoffeeCatRailway
@@ -60,7 +55,7 @@ public class FoodComboItem extends Item
 
 		if (Screen.hasShiftDown())
 		{
-			if (ModConfig.SHOW_FOOD_INFO)
+			if (FoodConfigs.CLIENT.showNutritionSaturation.getAsBoolean())
 			{
 				FoodProperties foodProperties = this.getFood(stack, null);
 				tooltipComponents.add(Component.literal("Nutrition: " + foodProperties.nutrition()).withStyle(ChatFormatting.GRAY));
@@ -129,9 +124,9 @@ public class FoodComboItem extends Item
 				foods.add(foodProperties);
 		});
 
-		if (ModConfig.INGREDIENT_AVERAGE)
+		if (FoodConfigs.SERVER.averageIngredients.getAsBoolean())
 			return ModFoods.average(data.toasted(), foods.toArray(new FoodProperties[0]));
-		return ModFoods.combine((float) ModConfig.NUTRITION_MODIFIER, (float) ModConfig.SATURATION_MODIFIER, data.toasted(), foods.toArray(new FoodProperties[0]));
+		return ModFoods.combine((float) FoodConfigs.SERVER.nutritionModifier.getAsDouble(), (float) FoodConfigs.SERVER.saturationModifier.getAsDouble(), data.toasted(), foods.toArray(new FoodProperties[0]));
 	}
 
 	public static class FoodComboProperties

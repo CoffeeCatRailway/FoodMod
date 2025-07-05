@@ -2,18 +2,13 @@ package io.github.coffeecatrailway.food.common.item;
 
 import com.mojang.logging.LogUtils;
 import io.github.coffeecatrailway.food.FoodMod;
-import io.github.coffeecatrailway.food.ModConfig;
 import io.github.coffeecatrailway.food.common.ModFoods;
-import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.food.Foods;
 import net.minecraft.world.item.*;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.slf4j.Logger;
-
-import java.util.List;
 
 /**
  * @author CoffeeCatRailway

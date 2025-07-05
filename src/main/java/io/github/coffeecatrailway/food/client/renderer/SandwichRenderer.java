@@ -2,10 +2,10 @@ package io.github.coffeecatrailway.food.client.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import io.github.coffeecatrailway.food.ModConfig;
 import io.github.coffeecatrailway.food.common.item.FoodComboItem;
 import io.github.coffeecatrailway.food.common.item.component.FoodComboComponent;
 import io.github.coffeecatrailway.food.common.item.component.ModComponents;
+import io.github.coffeecatrailway.food.config.FoodConfigs;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -61,12 +61,12 @@ public class SandwichRenderer extends BlockEntityWithoutLevelRenderer
 			poseStack.translate(0.f, 0.f, .06f);
 
 			float angle = (float) (RANDOM.nextFloat() * Math.PI * 2f);
-			if (ModConfig.INGREDIENT_ROTATIONS)
+			if (FoodConfigs.CLIENT.rotateIngredients.getAsBoolean())
 				poseStack.mulPose(Axis.ZN.rotation(angle));
 
 			itemRenderer.renderStatic(ingredient, ItemDisplayContext.FIXED, packedLight, packedOverlay, poseStack, buffer, null, 0);
 
-			if (ModConfig.INGREDIENT_ROTATIONS)
+			if (FoodConfigs.CLIENT.rotateIngredients.getAsBoolean())
 				poseStack.mulPose(Axis.ZP.rotation(angle));
 		});
 
