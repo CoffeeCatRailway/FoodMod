@@ -55,13 +55,13 @@ public class ModItems
 		} else if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES)
 		{
 			LOGGER.info("Adding tool items to tabs");
-			event.accept(KNIFE_WOODEN);
-			event.accept(KNIFE_STONE);
-			event.accept(KNIFE_COPPER);
-			event.accept(KNIFE_GOLD);
-			event.accept(KNIFE_IRON);
-			event.accept(KNIFE_DIAMOND);
-			event.accept(KNIFE_NETHERITE);
+			event.insertAfter(new ItemStack(Items.WOODEN_HOE), new ItemStack(KNIFE_WOODEN.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+			event.insertAfter(new ItemStack(Items.STONE_HOE), new ItemStack(KNIFE_STONE.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+			event.insertAfter(new ItemStack(KNIFE_STONE.get()), new ItemStack(KNIFE_COPPER.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+			event.insertAfter(new ItemStack(Items.GOLDEN_HOE), new ItemStack(KNIFE_GOLD.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+			event.insertAfter(new ItemStack(Items.IRON_HOE), new ItemStack(KNIFE_IRON.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+			event.insertAfter(new ItemStack(Items.DIAMOND_HOE), new ItemStack(KNIFE_DIAMOND.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+			event.insertAfter(new ItemStack(Items.NETHERITE_HOE), new ItemStack(KNIFE_NETHERITE.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
 		}
 	}
 }

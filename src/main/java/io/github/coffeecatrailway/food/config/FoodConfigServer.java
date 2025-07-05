@@ -30,10 +30,10 @@ public class FoodConfigServer
 
 		builder.push("combinedModifiers");
 		nutritionModifier = builder.comment("Nutrition modifier.")
-				.defineInRange("nutritionModifier", .6d, 0d, 10.d);
+				.defineInRange("nutritionModifier", .75d, 0d, 10.d);
 
 		saturationModifier = builder.comment("Saturation modifier.")
-				.defineInRange("saturationModifier", .5d, 0d, 10.d);
+				.defineInRange("saturationModifier", .75d, 0d, 10.d);
 		builder.pop(); // combinedModifiers
 
 		builder.pop(); // sandwich

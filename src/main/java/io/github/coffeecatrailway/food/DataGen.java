@@ -76,6 +76,8 @@ public class DataGen
 			this.add(ModItems.KNIFE_NETHERITE.get(), "Netherite Knife");
 
 			this.add("item." + FoodMod.MODID + ".food_combo.info", "to show ingredients");
+			this.add("item." + FoodMod.MODID + ".food_combo.info.nutrition", "Nutrition: %s");
+			this.add("item." + FoodMod.MODID + ".food_combo.info.saturation", "Saturation: %s");
 			this.add(ModItems.SANDWICH.get(), "Sandwich");
 			this.add("item." + FoodMod.MODID + ".sandwich.toasted", "Toasted");
 

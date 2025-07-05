@@ -58,8 +58,8 @@ public class FoodComboItem extends Item
 			if (FoodConfigs.CLIENT.showNutritionSaturation.getAsBoolean())
 			{
 				FoodProperties foodProperties = this.getFood(stack, null);
-				tooltipComponents.add(Component.literal("Nutrition: " + foodProperties.nutrition()).withStyle(ChatFormatting.GRAY));
-				tooltipComponents.add(Component.literal("Saturation: " + foodProperties.saturation()).withStyle(ChatFormatting.GRAY));
+				tooltipComponents.add(Component.translatable("item." + FoodMod.MODID + ".food_combo.info.nutrition", foodProperties.nutrition()).withStyle(ChatFormatting.GRAY));
+				tooltipComponents.add(Component.translatable("item." + FoodMod.MODID + ".food_combo.info.saturation", foodProperties.saturation()).withStyle(ChatFormatting.GRAY));
 			}
 
 			List<String> has = new ArrayList<>();
