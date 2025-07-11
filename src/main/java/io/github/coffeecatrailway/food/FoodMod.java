@@ -56,9 +56,9 @@ public class FoodMod
 		generator.addProvider(event.includeClient(), new DataGen.ItemModel(output, existingFileHelper));
 		generator.addProvider(event.includeClient(), new DataGen.Language(output));
 		generator.addProvider(event.includeServer(), new DataGen.Recipe(output, lookupProvider));
-		DataGen.BlockTag blockTag = new DataGen.BlockTag(output, lookupProvider, existingFileHelper);
-		generator.addProvider(event.includeServer(), blockTag);
-		generator.addProvider(event.includeServer(), new DataGen.ItemTag(output, lookupProvider, blockTag.contentsGetter(), existingFileHelper));
+		DataGen.BlockTags blockTags = new DataGen.BlockTags(output, lookupProvider, existingFileHelper);
+		generator.addProvider(event.includeServer(), blockTags);
+		generator.addProvider(event.includeServer(), new DataGen.ItemTags(output, lookupProvider, blockTags.contentsGetter(), existingFileHelper));
 	}
 
 	public static ResourceLocation id(String location)
