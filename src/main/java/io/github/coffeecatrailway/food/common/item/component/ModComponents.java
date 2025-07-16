@@ -22,7 +22,7 @@ public class ModComponents
 
 	public static void init(IEventBus modEventBus)
 	{
-		LOGGER.info("Registering item components");
+		LOGGER.debug("Registering item components");
 		COMPONENTS.register(modEventBus);
 	}
 }

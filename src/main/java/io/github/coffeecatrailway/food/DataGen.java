@@ -2,6 +2,8 @@ package io.github.coffeecatrailway.food;
 
 import io.github.coffeecatrailway.food.common.ModFoods;
 import io.github.coffeecatrailway.food.common.item.ModItems;
+import io.github.coffeecatrailway.food.common.item.crafting.CrackerRecipe;
+import io.github.coffeecatrailway.food.common.item.crafting.PizzaRecipe;
 import io.github.coffeecatrailway.food.common.item.crafting.SandwichRecipe;
 import io.github.coffeecatrailway.food.config.FoodConfigs;
 import net.minecraft.core.HolderLookup;
@@ -134,7 +136,8 @@ public class DataGen
 			this.basicItem(ModItems.MAPLE_SYRUP.get());
 		}
 
-		public ItemModelBuilder basicItem(Item item, ResourceLocation texture) {
+		public ItemModelBuilder basicItem(Item item, ResourceLocation texture)
+		{
 			return getBuilder(Objects.requireNonNull(BuiltInRegistries.ITEM.getKey(item)).toString())
 					.parent(new ModelFile.UncheckedModelFile("item/generated"))
 					.texture("layer0", texture);
@@ -161,6 +164,8 @@ public class DataGen
 			this.add("item." + FoodMod.MODID + ".food_combo.info.nutrition", "Nutrition: %s");
 			this.add("item." + FoodMod.MODID + ".food_combo.info.saturation", "Saturation: %s");
 			this.add("item." + FoodMod.MODID + ".sandwich.toasted", "Toasted");
+			this.add("item." + FoodMod.MODID + ".pizza.unfired", "Unfired");
+			this.add("item." + FoodMod.MODID + ".pizza.fired", "Fired");
 
 			// Other
 			this.add("tooltip." + FoodMod.MODID + ".hold_shift", "[HOLD SHIFT %s]");
@@ -216,9 +221,9 @@ public class DataGen
 		}
 	}
 
-	public static class Recipe extends RecipeProvider
+	public static class Recipes extends RecipeProvider
 	{
-		public Recipe(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider)
+		public Recipes(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider)
 		{
 			super(output, lookupProvider);
 		}
@@ -288,6 +293,7 @@ public class DataGen
 			ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, ModItems.DOUGH.get(), 3).requires(Tags.Items.CROPS_WHEAT).requires(Items.SUGAR).requires(ItemTags.FOODS_SALT).requires(ItemTags.FOODS_FLOUR).unlockedBy("has_wheat", has(Tags.Items.CROPS_WHEAT)).unlockedBy("has_sugar", has(Items.SUGAR)).unlockedBy("has_salt", has(ItemTags.FOODS_SALT)).unlockedBy("has_flour", has(ItemTags.FOODS_FLOUR)).save(recipeOutput);
 			ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, ModItems.UNFIRED_PIZZA_BASE.get()).requires(ItemTags.TOOLS_ROLLING_PIN).requires(ModItems.DOUGH.get()).unlockedBy("has_dough", has(ModItems.DOUGH.get())).unlockedBy("has_rolling_pin", has(ItemTags.TOOLS_ROLLING_PIN)).save(recipeOutput);
 //			ChoppingBoardRecipeBuilder.recipe(ModItems.UNBAKED_PIZZA_BASE.get(), Ingredient.of(ModItems.DOUGH.get())).tool(Ingredient.of(ItemTag.TOOLS_ROLLING_PIN)).unlockedBy("has_dough", has(ModItems.DOUGH.get())).save(recipeOutput, FoodMod.id("unbaked_pizza_base_chopping_board"));
+			SpecialRecipeBuilder.special(PizzaRecipe::new).save(recipeOutput, FoodMod.id("pizza"));
 
 			ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, ModItems.UNBAKED_BREAD.get(), 2).define('d', ItemTags.FOODS_DOUGH).pattern("ddd").unlockedBy("has_dough", has(ItemTags.FOODS_DOUGH)).save(recipeOutput);
 			SimpleCookingRecipeBuilder.smoking(Ingredient.of(ModItems.UNBAKED_BREAD.get()), RecipeCategory.FOOD, Items.BREAD, .2f, 200).unlockedBy("has_unbaked_bread", has(ModItems.UNBAKED_BREAD.get())).save(recipeOutput, FoodMod.id("bread_smoking"));
@@ -298,6 +304,7 @@ public class DataGen
 
 			ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, ModItems.UNBAKED_CRACKER.get(), 3).requires(ModItems.UNFIRED_PIZZA_BASE).requires(ItemTags.TOOLS_KNIFE).unlockedBy("has_knife", has(ItemTags.TOOLS_KNIFE)).save(recipeOutput);
 			this.cookedFood(ModItems.UNBAKED_CRACKER.get(), ModItems.CRACKER.get(), .35f, 100, recipeOutput);
+			SpecialRecipeBuilder.special(CrackerRecipe::new).save(recipeOutput, FoodMod.id("cracker_special"));
 
 			this.cookedFood(ModItems.CRACKED_EGG.get(), ModItems.FRIED_EGG.get(), .15f, 100, recipeOutput);
 			ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, ModItems.GREEN_CRACKED_EGG.get()).requires(Tags.Items.DYES_GREEN).requires(ModItems.CRACKED_EGG.get()).unlockedBy("has_egg", has(ModItems.CRACKED_EGG.get())).unlockedBy("has_dye", has(Tags.Items.DYES_GREEN)).save(recipeOutput);
@@ -374,7 +381,7 @@ public class DataGen
 //			ShapedRecipeBuilder.shaped(HNCBlocks.POPCORN_MACHINE.get()).define('i', HNCItemTags.IRON_INGOTS_COMMON).define('r', Blocks.RED_CONCRETE).define('w', Blocks.WHITE_CONCRETE).define('b', Items.BUCKET).define('g', Blocks.GLASS_PANE)
 //					.pattern("rwr").pattern("gbg").pattern("i i").unlockedBy("has_iron", has(HNCItemTags.IRON_INGOTS_COMMON)).unlockedBy("has_red_concrete", has(Blocks.RED_CONCRETE))
 //					.unlockedBy("has_white_concrete", has(Blocks.WHITE_CONCRETE)).unlockedBy("has_bucket", has(Items.BUCKET)).unlockedBy("has_glass_pane", has(Blocks.GLASS_PANE)).save(recipeOutput);
-			
+
 //			ShapedRecipeBuilder.shaped(HNCBlocks.MAPLE_WOOD.get(), 3).define('l', HNCBlocks.MAPLE_LOG.get()).pattern("ll").pattern("ll").group("bark").unlockedBy("has_log", has(HNCBlocks.MAPLE_LOG.get())).save(recipeOutput);
 //			ShapedRecipeBuilder.shaped(HNCBlocks.STRIPPED_MAPLE_WOOD.get(), 3).define('l', HNCBlocks.STRIPPED_MAPLE_LOG.get()).pattern("ll").pattern("ll").group("bark").unlockedBy("has_log", has(HNCBlocks.STRIPPED_MAPLE_LOG.get())).save(recipeOutput);
 //			ShapelessRecipeBuilder.shapeless(HNCBlocks.MAPLE_PLANKS.get(), 4).requires(Ingredient.of(HNCItemTags.MAPLE_LOGS)).group("planks").unlockedBy("has_log", has(HNCItemTags.MAPLE_LOGS)).save(recipeOutput);
@@ -516,6 +523,7 @@ public class DataGen
 
 		public static final TagKey<Item> FOODS_DOUGH = tagCommon("foods/dough");
 
+		public static final TagKey<Item> FOODS_UNFIRED_PIZZA_BASE = tag("foods/unfired_pizza_base");
 		public static final TagKey<Item> FOODS_PIZZA = tagCommon("foods/pizza");
 
 		public static final TagKey<Item> FOODS_BREAD_SLICE = tagCommon("foods/bread/slice");
@@ -579,6 +587,7 @@ public class DataGen
 
 			this.tag(FOODS_DOUGH).add(ModItems.DOUGH.get(), ModItems.UNFIRED_PIZZA_BASE.get(), ModItems.UNBAKED_CRACKER.get());
 
+			this.tag(FOODS_UNFIRED_PIZZA_BASE).add(ModItems.UNFIRED_PIZZA_BASE.get());
 			this.tag(FOODS_PIZZA).add(ModItems.UNFIRED_PIZZA_BASE.get(), ModItems.FIRED_PIZZA_BASE.get(), ModItems.PIZZA.get());
 
 			this.tag(FOODS_BREAD_SLICE).add(ModItems.BREAD_SLICE.get(), ModItems.TOAST.get(), ModItems.MOLDY_BREAD_SLICE.get());

@@ -11,6 +11,7 @@ import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 
@@ -20,12 +21,12 @@ import java.util.Random;
  * @author CoffeeCatRailway
  * Created: 02/07/2025
  */
-public class SandwichRenderer extends BlockEntityWithoutLevelRenderer
+public class FoodComboStackedRenderer extends BlockEntityWithoutLevelRenderer
 {
-	public static final SandwichRenderer INSTANCE = new SandwichRenderer();
+	public static final FoodComboStackedRenderer INSTANCE = new FoodComboStackedRenderer();
 	private static final Random RANDOM = new Random(42);
 
-	public SandwichRenderer()
+	public FoodComboStackedRenderer()
 	{
 		super(null, null);
 	}
@@ -38,14 +39,10 @@ public class SandwichRenderer extends BlockEntityWithoutLevelRenderer
 	@Override
 	public void renderByItem(ItemStack stack, ItemDisplayContext displayContext, PoseStack poseStack, MultiBufferSource buffer, int packedLight, int packedOverlay)
 	{
-		FoodComboComponent data = stack.getOrDefault(ModComponents.FOOD_COMBO, FoodComboComponent.EMPTY);
-		if (data.ingredients().isEmpty())
-			return;
-
 		poseStack.pushPose();
-
 		poseStack.translate(.5f, .5f, .5f);
 
+		FoodComboComponent data = stack.getOrDefault(ModComponents.FOOD_COMBO, FoodComboComponent.EMPTY);
 		FoodComboItem.FoodComboProperties properties = ((FoodComboItem) stack.getItem()).foodComboProperties;
 		ItemStack bun = properties.getBunItem(data.toasted());
 
@@ -60,7 +57,7 @@ public class SandwichRenderer extends BlockEntityWithoutLevelRenderer
 		data.ingredients().forEach(ingredient -> {
 			poseStack.translate(0.f, 0.f, .06f);
 
-			float angle = (float) (RANDOM.nextFloat() * Math.PI * 2f);
+			float angle = RANDOM.nextFloat() * Mth.TWO_PI;
 			if (FoodConfigs.CLIENT.rotateIngredients.getAsBoolean())
 				poseStack.mulPose(Axis.ZN.rotation(angle));
 

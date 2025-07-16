@@ -7,18 +7,18 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 
 /**
  * @author CoffeeCatRailway
- * Created: 31/05/2025
+ * Created: 16/07/2025
  */
-public class SandwichRecipe extends FoodComboRecipe
+public class CrackerRecipe extends FoodComboRecipe
 {
-	public SandwichRecipe(CraftingBookCategory category)
+	public CrackerRecipe(CraftingBookCategory category)
 	{
-		super(category, DataGen.ItemTags.FOODS_BREAD_SLICE, ModItems.SANDWICH);
+		super(category, DataGen.ItemTags.FOODS_CRACKER, ModItems.CRACKER);
 	}
 
 	@Override
 	public RecipeSerializer<?> getSerializer()
 	{
-		return ModRecipes.SANDWICH_SERIALIZER.get();
+		return ModRecipes.CRACKER_SERIALIZER.get();
 	}
 }

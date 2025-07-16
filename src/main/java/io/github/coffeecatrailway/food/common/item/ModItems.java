@@ -139,7 +139,7 @@ public class ModItems
 
 	public static void init(IEventBus modEventBus)
 	{
-		LOGGER.info("Registering items");
+		LOGGER.debug("Registering items");
 		ModItems.ITEMS.register(modEventBus);
 
 		modEventBus.addListener(ModItems::addCreative);
@@ -147,9 +147,9 @@ public class ModItems
 
 	private static void addCreative(BuildCreativeModeTabContentsEvent event)
 	{
-//		LOGGER.info("Adding items to tab: %s", event.getTabKey().location());
 		if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES)
 		{
+			LOGGER.debug("Adding to Tools And Utilities tab");
 			final ItemStack WOODEN_HOE = new ItemStack(Items.WOODEN_HOE);
 			final ItemStack STONE_HOE = new ItemStack(Items.STONE_HOE);
 			final ItemStack GOLDEN_HOE = new ItemStack(Items.GOLDEN_HOE);
@@ -176,6 +176,7 @@ public class ModItems
 
 		if (event.getTabKey() == CreativeModeTabs.FOOD_AND_DRINKS)
 		{
+			LOGGER.debug("Adding to Food And Drinks tab");
 			event.insertBefore(new ItemStack(Items.BREAD), new ItemStack(DOUGH.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
 
 			event.insertAfter(new ItemStack(DOUGH.get()), new ItemStack(UNFIRED_PIZZA_BASE.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
@@ -236,6 +237,7 @@ public class ModItems
 
 		if (event.getTabKey() == CreativeModeTabs.INGREDIENTS)
 		{
+			LOGGER.debug("Adding to Ingredients tab");
 			event.accept(GEAR_WOODEN);
 			event.accept(GEAR_STONE);
 		}

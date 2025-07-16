@@ -1,7 +1,8 @@
 package io.github.coffeecatrailway.food;
 
 import com.mojang.logging.LogUtils;
-import io.github.coffeecatrailway.food.client.extensions.common.SandwichExtension;
+import io.github.coffeecatrailway.food.client.extensions.common.PizzaExtension;
+import io.github.coffeecatrailway.food.client.extensions.common.FoodComboStackedExtension;
 import io.github.coffeecatrailway.food.common.item.ModItems;
 import io.github.coffeecatrailway.food.common.item.component.ModComponents;
 import io.github.coffeecatrailway.food.common.item.crafting.ModRecipes;
@@ -28,7 +29,7 @@ public class FoodMod
 
 	public FoodMod(IEventBus modEventBus, ModContainer modContainer)
 	{
-		LOGGER.info("Loading");
+		LOGGER.debug("Loading");
 
 		ModComponents.init(modEventBus);
 		ModItems.init(modEventBus);
@@ -43,7 +44,9 @@ public class FoodMod
 
 	public void clientExt(RegisterClientExtensionsEvent event)
 	{
-		event.registerItem(new SandwichExtension(), ModItems.SANDWICH);
+		event.registerItem(new PizzaExtension(), ModItems.PIZZA);
+		event.registerItem(new FoodComboStackedExtension(), ModItems.CRACKER);
+		event.registerItem(new FoodComboStackedExtension(), ModItems.SANDWICH);
 	}
 
 	public void onGatherData(GatherDataEvent event)
@@ -53,9 +56,10 @@ public class FoodMod
 		ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
 		CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 
-		generator.addProvider(event.includeClient(), new DataGen.ItemModel(output, existingFileHelper));
+		generator.addProvider(event.includeClient(), new DataGen.BlockModels(output, existingFileHelper));
+		generator.addProvider(event.includeClient(), new DataGen.ItemModels(output, existingFileHelper));
 		generator.addProvider(event.includeClient(), new DataGen.Language(output));
-		generator.addProvider(event.includeServer(), new DataGen.Recipe(output, lookupProvider));
+		generator.addProvider(event.includeServer(), new DataGen.Recipes(output, lookupProvider));
 		DataGen.BlockTags blockTags = new DataGen.BlockTags(output, lookupProvider, existingFileHelper);
 		generator.addProvider(event.includeServer(), blockTags);
 		generator.addProvider(event.includeServer(), new DataGen.ItemTags(output, lookupProvider, blockTags.contentsGetter(), existingFileHelper));

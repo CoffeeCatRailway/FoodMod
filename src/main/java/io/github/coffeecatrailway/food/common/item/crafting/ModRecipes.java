@@ -20,10 +20,12 @@ public class ModRecipes
 	public static final DeferredRegister<RecipeSerializer<?>> SERIALIZERS = DeferredRegister.create(BuiltInRegistries.RECIPE_SERIALIZER, FoodMod.MODID);
 
 	public static final DeferredHolder<RecipeSerializer<?>, SimpleCraftingRecipeSerializer<SandwichRecipe>> SANDWICH_SERIALIZER = SERIALIZERS.register("sandwich", () -> new SimpleCraftingRecipeSerializer<>(SandwichRecipe::new));
+	public static final DeferredHolder<RecipeSerializer<?>, SimpleCraftingRecipeSerializer<CrackerRecipe>> CRACKER_SERIALIZER = SERIALIZERS.register("cracker", () -> new SimpleCraftingRecipeSerializer<>(CrackerRecipe::new));
+	public static final DeferredHolder<RecipeSerializer<?>, SimpleCraftingRecipeSerializer<PizzaRecipe>> PIZZA_SERIALIZER = SERIALIZERS.register("pizza", () -> new SimpleCraftingRecipeSerializer<>(PizzaRecipe::new));
 
 	public static void init(IEventBus modEventBus)
 	{
-		LOGGER.info("Registering recipe serializers");
+		LOGGER.debug("Registering recipe serializers");
 		SERIALIZERS.register(modEventBus);
 	}
 }
