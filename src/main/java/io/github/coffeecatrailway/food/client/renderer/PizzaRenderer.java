@@ -64,7 +64,7 @@ public class PizzaRenderer extends BlockEntityWithoutLevelRenderer
 		ItemStack bun = properties.getBunItem(data.toasted());
 
 		ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
-		RANDOM.setSeed(42);
+		RANDOM.setSeed(42 + data.ingredients().size());//ItemStack.hashItemAndComponents(stack));
 
 		// Render bun
 //		poseStack.translate(0f, 0f,  -(.06f * data.ingredients().size() / 12f) / 2f);
@@ -84,19 +84,20 @@ public class PizzaRenderer extends BlockEntityWithoutLevelRenderer
 		poseStack.popPose();
 
 		// Render ingredients
-		float scale = .2f;
-		poseStack.scale(scale, scale, scale);
-		poseStack.translate(0f, 0f, .18f);
+		poseStack.translate(0f, 0f, .03f);
 		for (ItemStack ingredient : data.ingredients())
 		{
 			poseStack.pushPose();
-			float angle = RANDOM.nextFloat(Mth.TWO_PI * 1.5f);
-			float length = RANDOM.nextFloat() * .9f + .5f;
+			float scale = .2f;
+			float scaleDif = RANDOM.nextFloat(-.025f, .15f);
+			poseStack.scale(scale + scaleDif, scale + scaleDif, scale);
+
+			float angle = RANDOM.nextFloat(-Mth.PI, Mth.TWO_PI);
+			float length = RANDOM.nextFloat() * .55f + .5f;
 
 			float x = Mth.sin(angle) * length;
 			float y = Mth.cos(angle) * length;
-			float z = RANDOM.nextFloat() * 2f - 1f;
-			z *= .01f;
+			float z = RANDOM.nextFloat(-.01f, .02f);
 
 			poseStack.translate(x, y, z);
 
