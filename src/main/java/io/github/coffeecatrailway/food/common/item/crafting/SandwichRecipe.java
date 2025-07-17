@@ -1,7 +1,7 @@
 package io.github.coffeecatrailway.food.common.item.crafting;
 
-import io.github.coffeecatrailway.food.DataGen;
 import io.github.coffeecatrailway.food.common.item.ModItems;
+import io.github.coffeecatrailway.food.datagen.ModItemTags;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 
@@ -13,7 +13,7 @@ public class SandwichRecipe extends FoodComboRecipe
 {
 	public SandwichRecipe(CraftingBookCategory category)
 	{
-		super(category, DataGen.ItemTags.FOODS_BREAD_SLICE, ModItems.SANDWICH);
+		super(category, ModItemTags.FOODS_BREAD_SLICE, ModItems.SANDWICH);
 	}
 
 	@Override

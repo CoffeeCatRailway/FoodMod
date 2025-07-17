@@ -1,9 +1,11 @@
 package io.github.coffeecatrailway.food.common.item;
 
 import com.mojang.logging.LogUtils;
-import io.github.coffeecatrailway.food.DataGen;
 import io.github.coffeecatrailway.food.FoodMod;
 import io.github.coffeecatrailway.food.common.ModFoods;
+import io.github.coffeecatrailway.food.common.block.ModBlocks;
+import io.github.coffeecatrailway.food.datagen.LanguageGenerator;
+import io.github.coffeecatrailway.food.datagen.ModBlockTags;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.*;
@@ -40,13 +42,13 @@ public class ModItems
 
 	public static final DeferredItem<CraftingToolItem> GRIND_STONES = register("grind_stones", prop -> itemCraftingTool(prop, Tiers.STONE, 2f, -2.0f), ID_NAME);
 
-	public static final DeferredItem<CraftingToolItem> KNIFE_WOODEN = register("knife_wooden", prop -> itemCraftingTool(prop, Tiers.WOOD, 1f, -2.5f, DataGen.BlockTags.MINEABLE_WITH_KNIFE), "Wooden Knife");
-	public static final DeferredItem<CraftingToolItem> KNIFE_STONE = register("knife_stone", prop -> itemCraftingTool(prop, Tiers.STONE, 1f, -2.5f, DataGen.BlockTags.MINEABLE_WITH_KNIFE), "Stone Knife");
-	public static final DeferredItem<CraftingToolItem> KNIFE_COPPER = register("knife_copper", prop -> itemCraftingTool(prop, Tiers.STONE, 1f, -2.5f, DataGen.BlockTags.MINEABLE_WITH_KNIFE), "Copper Knife");
-	public static final DeferredItem<CraftingToolItem> KNIFE_GOLD = register("knife_gold", prop -> itemCraftingTool(prop, Tiers.GOLD, 1f, -2.5f, DataGen.BlockTags.MINEABLE_WITH_KNIFE), "Gold Knife");
-	public static final DeferredItem<CraftingToolItem> KNIFE_IRON = register("knife_iron", prop -> itemCraftingTool(prop, Tiers.IRON, 1f, -2.5f, DataGen.BlockTags.MINEABLE_WITH_KNIFE), "Iron Knife");
-	public static final DeferredItem<CraftingToolItem> KNIFE_DIAMOND = register("knife_diamond", prop -> itemCraftingTool(prop, Tiers.DIAMOND, 1f, -2.5f, DataGen.BlockTags.MINEABLE_WITH_KNIFE), "Diamond Knife");
-	public static final DeferredItem<CraftingToolItem> KNIFE_NETHERITE = register("knife_netherite", prop -> itemCraftingTool(prop, Tiers.NETHERITE, 1f, -2.5f, DataGen.BlockTags.MINEABLE_WITH_KNIFE), "Netherite Knife");
+	public static final DeferredItem<CraftingToolItem> KNIFE_WOODEN = register("knife_wooden", prop -> itemCraftingTool(prop, Tiers.WOOD, 1f, -2.5f, ModBlockTags.MINEABLE_WITH_KNIFE), "Wooden Knife");
+	public static final DeferredItem<CraftingToolItem> KNIFE_STONE = register("knife_stone", prop -> itemCraftingTool(prop, Tiers.STONE, 1f, -2.5f, ModBlockTags.MINEABLE_WITH_KNIFE), "Stone Knife");
+	public static final DeferredItem<CraftingToolItem> KNIFE_COPPER = register("knife_copper", prop -> itemCraftingTool(prop, Tiers.STONE, 1f, -2.5f, ModBlockTags.MINEABLE_WITH_KNIFE), "Copper Knife");
+	public static final DeferredItem<CraftingToolItem> KNIFE_GOLD = register("knife_gold", prop -> itemCraftingTool(prop, Tiers.GOLD, 1f, -2.5f, ModBlockTags.MINEABLE_WITH_KNIFE), "Gold Knife");
+	public static final DeferredItem<CraftingToolItem> KNIFE_IRON = register("knife_iron", prop -> itemCraftingTool(prop, Tiers.IRON, 1f, -2.5f, ModBlockTags.MINEABLE_WITH_KNIFE), "Iron Knife");
+	public static final DeferredItem<CraftingToolItem> KNIFE_DIAMOND = register("knife_diamond", prop -> itemCraftingTool(prop, Tiers.DIAMOND, 1f, -2.5f, ModBlockTags.MINEABLE_WITH_KNIFE), "Diamond Knife");
+	public static final DeferredItem<CraftingToolItem> KNIFE_NETHERITE = register("knife_netherite", prop -> itemCraftingTool(prop, Tiers.NETHERITE, 1f, -2.5f, ModBlockTags.MINEABLE_WITH_KNIFE), "Netherite Knife");
 
 	// Foods
 	public static final DeferredItem<Item> CHEESE_SLICE = register("cheese_slice", prop -> new Item(prop.food(ModFoods.CHEESE_SLICE).stacksTo(32)), ID_NAME);
@@ -87,7 +89,7 @@ public class ModItems
 
 	public static final DeferredItem<SandwichItem> SANDWICH = register("sandwich", SandwichItem::new, ID_NAME);
 
-//	public static final DeferredItem<ItemNameBlockItem> PINEAPPLE_PLANT = register("pineapple_plant", prop -> new ItemNameBlockItem(ModBlocks.PINEAPPLE_PLANT.get(), prop), ID_NAME);
+	public static final DeferredItem<ItemNameBlockItem> PINEAPPLE_PLANT = register("pineapple_plant", prop -> new ItemNameBlockItem(ModBlocks.PINEAPPLE_PLANT.get(), prop), ID_NAME);
 	public static final DeferredItem<Item> PINEAPPLE = register("pineapple", prop -> new Item(prop.food(ModFoods.PINEAPPLE).stacksTo(16)), ID_NAME);
 	public static final DeferredItem<Item> PINEAPPLE_RING = register("pineapple_ring", prop -> new Item(prop.food(ModFoods.PINEAPPLE_RING).stacksTo(32)), ID_NAME);
 	public static final DeferredItem<Item> PINEAPPLE_BITES = register("pineapple_bites", prop -> new Item(prop.food(ModFoods.PINEAPPLE_BITES)), ID_NAME);
@@ -133,7 +135,7 @@ public class ModItems
 	private static <T extends Item> DeferredItem<T> register(String id, Function<Item.Properties, T> factory, String name)
 	{
 		DeferredItem<T> item = ITEMS.registerItem(id, factory);
-		DataGen.Language.ITEMS.put(item, name.equals(ID_NAME) ? DataGen.Language.capitalize(id) : name);
+		LanguageGenerator.ITEMS.put(item, name.equals(ID_NAME) ? LanguageGenerator.capitalize(id) : name);
 		return item;
 	}
 

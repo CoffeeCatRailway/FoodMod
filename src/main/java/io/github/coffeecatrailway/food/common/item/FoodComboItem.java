@@ -1,11 +1,11 @@
 package io.github.coffeecatrailway.food.common.item;
 
-import io.github.coffeecatrailway.food.DataGen;
 import io.github.coffeecatrailway.food.FoodMod;
 import io.github.coffeecatrailway.food.common.ModFoods;
 import io.github.coffeecatrailway.food.common.item.component.FoodComboComponent;
 import io.github.coffeecatrailway.food.common.item.component.ModComponents;
 import io.github.coffeecatrailway.food.config.FoodConfigs;
+import io.github.coffeecatrailway.food.datagen.LanguageGenerator;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -74,7 +74,7 @@ public class FoodComboItem extends Item
 				}
 			});
 		} else
-			tooltipComponents.add(DataGen.Language.shiftInfo(Component.translatable("item." + FoodMod.MODID + ".food_combo.info")).withStyle(ChatFormatting.DARK_GRAY));
+			tooltipComponents.add(LanguageGenerator.shiftInfo(Component.translatable("item." + FoodMod.MODID + ".food_combo.info")).withStyle(ChatFormatting.DARK_GRAY));
 	}
 
 //	@Override

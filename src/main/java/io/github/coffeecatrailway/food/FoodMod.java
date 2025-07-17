@@ -3,10 +3,12 @@ package io.github.coffeecatrailway.food;
 import com.mojang.logging.LogUtils;
 import io.github.coffeecatrailway.food.client.extensions.common.PizzaExtension;
 import io.github.coffeecatrailway.food.client.extensions.common.FoodComboStackedExtension;
+import io.github.coffeecatrailway.food.common.block.ModBlocks;
 import io.github.coffeecatrailway.food.common.item.ModItems;
 import io.github.coffeecatrailway.food.common.item.component.ModComponents;
 import io.github.coffeecatrailway.food.common.item.crafting.ModRecipes;
 import io.github.coffeecatrailway.food.config.FoodConfigs;
+import io.github.coffeecatrailway.food.datagen.*;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
@@ -32,6 +34,7 @@ public class FoodMod
 		LOGGER.debug("Loading");
 
 		ModComponents.init(modEventBus);
+		ModBlocks.init(modEventBus);
 		ModItems.init(modEventBus);
 		ModRecipes.init(modEventBus);
 
@@ -56,13 +59,14 @@ public class FoodMod
 		ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
 		CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 
-		generator.addProvider(event.includeClient(), new DataGen.BlockModels(output, existingFileHelper));
-		generator.addProvider(event.includeClient(), new DataGen.ItemModels(output, existingFileHelper));
-		generator.addProvider(event.includeClient(), new DataGen.Language(output));
-		generator.addProvider(event.includeServer(), new DataGen.Recipes(output, lookupProvider));
-		DataGen.BlockTags blockTags = new DataGen.BlockTags(output, lookupProvider, existingFileHelper);
+		generator.addProvider(event.includeClient(), new BlockModelGenerator(output, existingFileHelper));
+		generator.addProvider(event.includeClient(), new ItemModelGenerator(output, existingFileHelper));
+		generator.addProvider(event.includeClient(), new LanguageGenerator(output));
+		generator.addProvider(event.includeServer(), new RecipeGenerator(output, lookupProvider));
+		ModBlockTags blockTags = new ModBlockTags(output, lookupProvider, existingFileHelper);
 		generator.addProvider(event.includeServer(), blockTags);
-		generator.addProvider(event.includeServer(), new DataGen.ItemTags(output, lookupProvider, blockTags.contentsGetter(), existingFileHelper));
+		generator.addProvider(event.includeServer(), new ModItemTags(output, lookupProvider, blockTags.contentsGetter(), existingFileHelper));
+		generator.addProvider(event.includeServer(), new LootTableGenerator(output, lookupProvider));
 	}
 
 	public static ResourceLocation id(String location)

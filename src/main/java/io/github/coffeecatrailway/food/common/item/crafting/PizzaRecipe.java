@@ -1,7 +1,7 @@
 package io.github.coffeecatrailway.food.common.item.crafting;
 
-import io.github.coffeecatrailway.food.DataGen;
 import io.github.coffeecatrailway.food.common.item.ModItems;
+import io.github.coffeecatrailway.food.datagen.ModItemTags;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 
@@ -15,7 +15,7 @@ public class PizzaRecipe extends FoodComboRecipe
 {
 	public PizzaRecipe(CraftingBookCategory category)
 	{
-		super(category, DataGen.ItemTags.FOODS_UNFIRED_PIZZA_BASE, ModItems.PIZZA, Map.of(DataGen.ItemTags.FOODS_TOMATO_SAUCE, 1));
+		super(category, ModItemTags.FOODS_UNFIRED_PIZZA_BASE, ModItems.PIZZA, Map.of(ModItemTags.FOODS_TOMATO_SAUCE, 1));
 	}
 
 	@Override

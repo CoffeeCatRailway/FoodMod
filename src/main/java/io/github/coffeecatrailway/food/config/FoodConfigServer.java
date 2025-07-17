@@ -14,6 +14,8 @@ public final class FoodConfigServer
 	public final ModConfigSpec.DoubleValue nutritionModifier;
 	public final ModConfigSpec.DoubleValue saturationModifier;
 
+	public final ModConfigSpec.DoubleValue crackedEggSpawnChance;
+
 	public FoodConfigServer(ModConfigSpec.Builder builder)
 	{
 		builder.comment("Server-side config options").push("sandwich");
@@ -37,5 +39,8 @@ public final class FoodConfigServer
 		builder.pop(); // combinedModifiers
 
 		builder.pop(); // sandwich
+
+		crackedEggSpawnChance = builder.comment("The chance for a thrown egg to drop it's yoke")
+				.defineInRange("crackedEggSpawnChance", .25d, 0d, 1d);
 	}
 }
