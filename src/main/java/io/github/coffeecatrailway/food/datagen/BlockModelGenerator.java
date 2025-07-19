@@ -3,6 +3,7 @@ package io.github.coffeecatrailway.food.datagen;
 import io.github.coffeecatrailway.food.FoodMod;
 import io.github.coffeecatrailway.food.common.block.ModBlocks;
 import io.github.coffeecatrailway.food.common.block.PineapplePlantBlock;
+import io.github.coffeecatrailway.food.common.block.TomatoPlantBlock;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
@@ -28,12 +29,20 @@ public class BlockModelGenerator extends BlockStateProvider
 	{
 		this.getVariantBuilder(ModBlocks.PINEAPPLE_PLANT.get()).forAllStates(state -> {
 			int age = state.getValue(PineapplePlantBlock.AGE);
-			DoubleBlockHalf half = state.getValue(PineapplePlantBlock.HALF);
 
-			String path = "pineapple_plant_" + half.getSerializedName() + "_stage_" + age;
-			ResourceLocation parent = half == DoubleBlockHalf.UPPER ? FoodMod.id("block/pineapple_plant_top") : FoodMod.id("block/pineapple_plant_bottom");
+			String path = "pineapple_plant_stage_" + age;
+			BlockModelBuilder model = this.models().withExistingParent(path, FoodMod.id("block/pineapple_plant")).texture("texture", FoodMod.id("block/" + path)).renderType(RenderType.CUTOUT.name);
 
-			BlockModelBuilder model = this.models().withExistingParent(path, parent).texture("texture", FoodMod.id("block/" + path)).renderType(RenderType.CUTOUT.name);
+			return ConfiguredModel.builder().modelFile(model).build();
+		});
+
+		this.getVariantBuilder(ModBlocks.TOMATO_PLANT.get()).forAllStates(state -> {
+			int age = state.getValue(TomatoPlantBlock.AGE);
+			DoubleBlockHalf half = state.getValue(TomatoPlantBlock.HALF);
+
+			String path = "tomato_plant_" + half.getSerializedName() + "_stage_" + age;
+
+			BlockModelBuilder model = this.models().withExistingParent(path, ResourceLocation.withDefaultNamespace("block/crop")).texture("crop", FoodMod.id("block/" + path)).renderType(RenderType.CUTOUT.name);
 
 			return ConfiguredModel.builder().modelFile(model).build();
 		});

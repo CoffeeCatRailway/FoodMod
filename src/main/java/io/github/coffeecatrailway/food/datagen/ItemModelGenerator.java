@@ -83,11 +83,12 @@ public class ItemModelGenerator extends ItemModelProvider
 		this.basicItem(ModItems.RAW_BACON.get());
 		this.basicItem(ModItems.COOKED_BACON.get());
 
-		this.basicItem(ModItems.PINEAPPLE_PLANT.get(), FoodMod.id("block/pineapple_plant_upper_stage_0"));
-		this.basicItem(ModItems.PINEAPPLE.get(), FoodMod.id("block/pineapple_plant_upper_stage_4"));
+		this.basicItem(ModItems.PINEAPPLE_CROWN.get());
+		this.basicItem(ModItems.PINEAPPLE.get());
 		this.basicItem(ModItems.PINEAPPLE_RING.get());
 		this.basicItem(ModItems.PINEAPPLE_BITES.get());
 
+		this.basicItem(ModItems.TOMATO_SEEDS.get());
 		this.basicItem(ModItems.TOMATO.get());
 		this.basicItem(ModItems.TOMATO_SLICE.get());
 		this.basicItem(ModItems.TOMATO_SAUCE.get());

@@ -128,6 +128,7 @@ public class RecipeGenerator extends RecipeProvider
 
 		SpecialRecipeBuilder.special(SandwichRecipe::new).save(recipeOutput, FoodMod.id("sandwich"));
 
+		ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, ModItems.PINEAPPLE_CROWN.get()).requires(ModItems.PINEAPPLE.get()).unlockedBy("has_pineapple", has(ModItems.PINEAPPLE.get())).save(recipeOutput);
 		ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, ModItems.PINEAPPLE_RING.get(), 4).requires(ModItemTags.TOOLS_KNIFE).requires(ModItems.PINEAPPLE.get()).unlockedBy("has_pineapple", has(ModItems.PINEAPPLE.get()))
 				.unlockedBy("has_knife", has(ModItemTags.TOOLS_KNIFE)).save(recipeOutput);
 		ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, ModItems.PINEAPPLE_BITES.get(), 3).requires(ModItemTags.TOOLS_KNIFE).requires(ModItems.PINEAPPLE_RING.get()).unlockedBy("has_pineapple", has(ModItems.PINEAPPLE_RING.get()))
@@ -140,7 +141,7 @@ public class RecipeGenerator extends RecipeProvider
 		ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, ModItems.TOMATO_SLICE.get(), 4).requires(ModItemTags.TOOLS_KNIFE).requires(ModItems.TOMATO.get()).unlockedBy("has_knife", has(ModItemTags.TOOLS_KNIFE))
 				.unlockedBy("has_tomato", has(ModItems.TOMATO.get())).save(recipeOutput);
 //			ChoppingBoardRecipeBuilder.recipe(ModItems.TOMATO_SLICE.get(), 5, Ingredient.of(ModItems.TOMATO.get())).tool(Ingredient.of(ItemTag.TOOLS_KNIFE)).unlockedBy("has_tomato", has(ModItems.TOMATO.get())).save(recipeOutput, FoodMod.id("tomato_slice_chopping_board"));
-//			ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, ModItems.TOMATO_SEEDS.get(), 4).requires(ModItems.TOMATO_SLICE.get()).unlockedBy("has_tomato_slice", has(ModItems.TOMATO_SLICE.get())).save(recipeOutput);
+		ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, ModItems.TOMATO_SEEDS.get(), 4).requires(ModItems.TOMATO.get()).unlockedBy("has_tomato", has(ModItems.TOMATO.get())).save(recipeOutput);
 
 //			ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, ModItems.CORN_KERNELS.get(), 8).requires(ItemTag.TOOLS_KNIFE).requires(ModItems.CORN_COB.get()).unlockedBy("has_knife", has(ItemTag.TOOLS_KNIFE))
 //					.unlockedBy("has_corn_cob", has(HNCItemTags.CORN_COMMON)).save(recipeOutput);

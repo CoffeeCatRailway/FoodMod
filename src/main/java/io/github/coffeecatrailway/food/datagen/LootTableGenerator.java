@@ -3,8 +3,10 @@ package io.github.coffeecatrailway.food.datagen;
 import io.github.coffeecatrailway.food.FoodMod;
 import io.github.coffeecatrailway.food.common.block.ModBlocks;
 import io.github.coffeecatrailway.food.common.block.PineapplePlantBlock;
+import io.github.coffeecatrailway.food.common.block.TomatoPlantBlock;
 import io.github.coffeecatrailway.food.common.item.ModItems;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
+import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -114,22 +116,33 @@ public class LootTableGenerator extends LootTableProvider
 		protected void generate()
 		{
 			HolderLookup.RegistryLookup<Enchantment> enchantmentRegistryLookup = this.registries.lookupOrThrow(Registries.ENCHANTMENT);
+			Holder.Reference<Enchantment> fortune = enchantmentRegistryLookup.getOrThrow(Enchantments.FORTUNE);
 
+			int pineappleMaxAge = ModBlocks.PINEAPPLE_PLANT.get().getMaxAge();
 			this.add(ModBlocks.PINEAPPLE_PLANT.get(), block -> LootTable.lootTable()
 					.withPool(this.applyExplosionCondition(block, LootPool.lootPool().setRolls(ConstantValue.exactly(1))
 							.add(LootItem.lootTableItem(ModItems.PINEAPPLE.get())
 									.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
 											.setProperties(StatePropertiesPredicate.Builder.properties()
-													.hasProperty(PineapplePlantBlock.HALF, DoubleBlockHalf.UPPER)
-													.hasProperty(PineapplePlantBlock.AGE, 4)))
-									.otherwise(LootItem.lootTableItem(ModItems.PINEAPPLE_PLANT.get())))))
+													.hasProperty(PineapplePlantBlock.AGE, pineappleMaxAge)))
+									.otherwise(LootItem.lootTableItem(ModItems.PINEAPPLE_CROWN.get())))))
+					.withPool(this.applyExplosionCondition(block, LootPool.lootPool().setRolls(UniformGenerator.between(0, 1))
+							.add(LootItem.lootTableItem(ModItems.PINEAPPLE_CROWN.get())
+									.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
+											.setProperties(StatePropertiesPredicate.Builder.properties()
+													.hasProperty(PineapplePlantBlock.AGE, pineappleMaxAge)))))));
+
+			int tomatoMaxAge = ModBlocks.TOMATO_PLANT.get().getMaxAge();
+			this.add(ModBlocks.TOMATO_PLANT.get(), block -> LootTable.lootTable()
 					.withPool(this.applyExplosionCondition(block, LootPool.lootPool().setRolls(ConstantValue.exactly(1))
-							.add(LootItem.lootTableItem(ModItems.PINEAPPLE_PLANT)
-									.apply(ApplyBonusCount.addBonusBinomialDistributionCount(enchantmentRegistryLookup.getOrThrow(Enchantments.FORTUNE), .5714286f, 3)))
-							.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
-									.setProperties(StatePropertiesPredicate.Builder.properties()
-											.hasProperty(PineapplePlantBlock.HALF, DoubleBlockHalf.LOWER)
-											.hasProperty(PineapplePlantBlock.AGE, 4))))));
+							.add(LootItem.lootTableItem(ModItems.TOMATO.get())
+									.apply(ApplyBonusCount.addBonusBinomialDistributionCount(fortune, .65f, 3))
+									.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
+											.setProperties(StatePropertiesPredicate.Builder.properties()
+													.hasProperty(TomatoPlantBlock.AGE, tomatoMaxAge).hasProperty(TomatoPlantBlock.HALF, DoubleBlockHalf.LOWER)))
+									.otherwise(LootItem.lootTableItem(ModItems.TOMATO_SEEDS.get())
+											.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
+													.setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(TomatoPlantBlock.HALF, DoubleBlockHalf.LOWER))))))));
 		}
 
 		@Override

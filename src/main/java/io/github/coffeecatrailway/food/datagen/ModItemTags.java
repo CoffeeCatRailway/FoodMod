@@ -139,8 +139,8 @@ public class ModItemTags extends ItemTagsProvider
 		// Other
 		this.tag(MOUSE_BLACKLIST).add(Items.ROTTEN_FLESH, Items.SPIDER_EYE, Items.PUFFERFISH, ModItems.MOUSE.get(), ModItems.COOKED_MOUSE.get(), ModItems.FOOD_SCRAPS.get());
 
-		this.tag(SEEDS_PINEAPPLE);
-		this.tag(SEEDS_TOMATO);
+		this.tag(SEEDS_PINEAPPLE).add(ModItems.PINEAPPLE_CROWN.get());
+		this.tag(SEEDS_TOMATO).add(ModItems.TOMATO_SEEDS.get());
 		this.tag(SEEDS_CORN);
 		this.tag(Tags.Items.SEEDS).addTags(SEEDS_PINEAPPLE, SEEDS_TOMATO, SEEDS_CORN);
 

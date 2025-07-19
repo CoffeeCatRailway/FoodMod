@@ -89,12 +89,12 @@ public class ModItems
 
 	public static final DeferredItem<SandwichItem> SANDWICH = register("sandwich", SandwichItem::new, ID_NAME);
 
-	public static final DeferredItem<ItemNameBlockItem> PINEAPPLE_PLANT = register("pineapple_plant", prop -> new ItemNameBlockItem(ModBlocks.PINEAPPLE_PLANT.get(), prop), ID_NAME);
+	public static final DeferredItem<ItemNameBlockItem> PINEAPPLE_CROWN = register("pineapple_crown", prop -> new ItemNameBlockItem(ModBlocks.PINEAPPLE_PLANT.get(), prop), ID_NAME);
 	public static final DeferredItem<Item> PINEAPPLE = register("pineapple", prop -> new Item(prop.food(ModFoods.PINEAPPLE).stacksTo(16)), ID_NAME);
 	public static final DeferredItem<Item> PINEAPPLE_RING = register("pineapple_ring", prop -> new Item(prop.food(ModFoods.PINEAPPLE_RING).stacksTo(32)), ID_NAME);
 	public static final DeferredItem<Item> PINEAPPLE_BITES = register("pineapple_bites", prop -> new Item(prop.food(ModFoods.PINEAPPLE_BITES)), ID_NAME);
 
-//	public static final DeferredItem<ItemNameBlockItem> TOMATO_SEEDS = register("tomato_seeds", prop -> new ItemNameBlockItem(ModBlocks.TOMATO_PLANT.get(), prop), ID_NAME);
+	public static final DeferredItem<ItemNameBlockItem> TOMATO_SEEDS = register("tomato_seeds", prop -> new ItemNameBlockItem(ModBlocks.TOMATO_PLANT.get(), prop), ID_NAME);
 	public static final DeferredItem<Item> TOMATO = register("tomato", prop -> new Item(prop.food(ModFoods.TOMATO)), ID_NAME);
 	public static final DeferredItem<Item> TOMATO_SLICE = register("tomato_slice", prop -> new Item(prop.food(ModFoods.TOMATO_SLICE).stacksTo(32)), ID_NAME);
 	public static final DeferredItem<Item> TOMATO_SAUCE = register("tomato_sauce", prop -> new Item(prop.food(ModFoods.TOMATO_SAUCE).stacksTo(1)), ID_NAME);
@@ -149,6 +149,13 @@ public class ModItems
 
 	private static void addCreative(BuildCreativeModeTabContentsEvent event)
 	{
+		if (event.getTabKey() == CreativeModeTabs.NATURAL_BLOCKS)
+		{
+			LOGGER.debug("Adding to Natural Blocks tab");
+			event.insertAfter(new ItemStack(Items.NETHER_WART), new ItemStack(PINEAPPLE_CROWN.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+			event.insertAfter(new ItemStack(PINEAPPLE_CROWN.get()), new ItemStack(TOMATO_SEEDS.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+		}
+
 		if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES)
 		{
 			LOGGER.debug("Adding to Tools And Utilities tab");
