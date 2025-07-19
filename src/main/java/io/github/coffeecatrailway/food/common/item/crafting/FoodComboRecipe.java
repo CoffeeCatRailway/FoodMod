@@ -1,8 +1,6 @@
 package io.github.coffeecatrailway.food.common.item.crafting;
 
-import com.mojang.datafixers.util.Pair;
 import io.github.coffeecatrailway.food.common.item.FoodComboItem;
-import io.github.coffeecatrailway.food.common.item.ModItems;
 import io.github.coffeecatrailway.food.common.item.component.FoodComboComponent;
 import io.github.coffeecatrailway.food.common.item.component.ModComponents;
 import net.minecraft.core.HolderLookup;
@@ -12,7 +10,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CustomRecipe;
-import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 
 import java.util.ArrayList;

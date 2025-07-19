@@ -1,8 +1,8 @@
 package io.github.coffeecatrailway.food;
 
 import com.mojang.logging.LogUtils;
-import io.github.coffeecatrailway.food.client.extensions.common.PizzaExtension;
 import io.github.coffeecatrailway.food.client.extensions.common.FoodComboStackedExtension;
+import io.github.coffeecatrailway.food.client.extensions.common.PizzaExtension;
 import io.github.coffeecatrailway.food.common.block.ModBlocks;
 import io.github.coffeecatrailway.food.common.item.ModItems;
 import io.github.coffeecatrailway.food.common.item.component.ModComponents;
