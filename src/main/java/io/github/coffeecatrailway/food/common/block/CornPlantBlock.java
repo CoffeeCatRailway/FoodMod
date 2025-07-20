@@ -31,17 +31,34 @@ import org.jetbrains.annotations.Nullable;
 
 /**
  * @author CoffeeCatRailway
- * Created: 17/07/2025
+ * Created: 20/07/2025
  */
-public class TomatoPlantBlock extends CropBlock
+public class CornPlantBlock extends CropBlock
 {
 	public static final EnumProperty<DoubleBlockHalf> HALF = BlockStateProperties.DOUBLE_BLOCK_HALF;
-	public static final int MAX_AGE = 9;
+	public static final int MAX_AGE = 6;
 	public static final IntegerProperty AGE = IntegerProperty.create("age", 0, MAX_AGE);
 
-	public static final VoxelShape SHAPE = Shapes.block();
+	private static final VoxelShape[] SHAPES_UPPER = new VoxelShape[]{
+			Block.box(6d, -16d, 6d, 10d, -15d, 10d),
+			Block.box(6d, -16d, 6d, 10d, -15d, 10d),
+			Block.box(6d, -16d, 6d, 10d, -15d, 10d),
+			Block.box(4d, 0d, 4d, 12d, 5d, 12d),
+			Block.box(4d, 0d, 4d, 12d, 9d, 12d),
+			Block.box(4d, 0d, 4d, 12d, 14d, 12d),
+			Block.box(3d, 0d, 3d, 13d, 15d, 13d)
+	};
+	private static final VoxelShape[] SHAPES_LOWER = new VoxelShape[]{
+			Block.box(6d, 0d, 6d, 10d, 7d, 10d),
+			Block.box(4d, 0d, 4d, 12d, 11d, 12d),
+			Block.box(3d, 0d, 3d, 12d, 16d, 12d),
+			Block.box(3d, 0d, 3d, 13d, 16d, 13d),
+			Block.box(3d, 0d, 3d, 13d, 16d, 13d),
+			Block.box(3d, 0d, 3d, 13d, 16d, 13d),
+			Block.box(3d, 0d, 3d, 13d, 16d, 13d)
+	};
 
-	public TomatoPlantBlock(Properties properties)
+	public CornPlantBlock(Properties properties)
 	{
 		super(properties);
 		this.registerDefaultState(this.stateDefinition.any().setValue(HALF, DoubleBlockHalf.LOWER).setValue(AGE, 0));
@@ -51,7 +68,8 @@ public class TomatoPlantBlock extends CropBlock
 	@Override
 	protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context)
 	{
-		return SHAPE;
+		int age = state.getValue(AGE);
+		return state.getValue(HALF) == DoubleBlockHalf.UPPER ? SHAPES_UPPER[age] : SHAPES_LOWER[age];
 	}
 
 	@Override
@@ -75,7 +93,7 @@ public class TomatoPlantBlock extends CropBlock
 	@Override
 	protected ItemLike getBaseSeedId()
 	{
-		return ModItems.TOMATO_SEEDS;
+		return ModItems.CORN_COB;
 	}
 
 	@Override
@@ -188,22 +206,6 @@ public class TomatoPlantBlock extends CropBlock
 		super.playerDestroy(level, player, pos, Blocks.AIR.defaultBlockState(), te, stack);
 	}
 
-	public static void preventDropFromBottomPart(Level level, BlockPos pos, BlockState state, Player player)
-	{
-		DoubleBlockHalf half = state.getValue(HALF);
-		if (half == DoubleBlockHalf.UPPER)
-		{
-			BlockPos posBelow = pos.below();
-			BlockState stateBelow = level.getBlockState(posBelow);
-			if (stateBelow.is(state.getBlock()) && stateBelow.getValue(HALF) == DoubleBlockHalf.LOWER)
-			{
-				BlockState fluidStateBelow = stateBelow.getFluidState().is(Fluids.WATER) ? Blocks.WATER.defaultBlockState() : Blocks.AIR.defaultBlockState();
-				level.setBlock(posBelow, fluidStateBelow, 35);
-				level.levelEvent(player, 2001, posBelow, Block.getId(stateBelow));
-			}
-		}
-	}
-
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder)
 	{
@@ -213,6 +215,6 @@ public class TomatoPlantBlock extends CropBlock
 	@Override
 	public MapCodec<? extends CropBlock> codec()
 	{
-		return ModBlocks.TOMATO_PLANT_CODEC.get();
+		return ModBlocks.CORN_PLANT_CODEC.get();
 	}
 }

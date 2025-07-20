@@ -38,6 +38,10 @@ public class ModBlocks
 			.mapColor(MapColor.PLANT).noCollission().randomTicks().instabreak().sound(SoundType.CROP).pushReaction(PushReaction.DESTROY)), ID_NAME);
 	public static final Supplier<MapCodec<TomatoPlantBlock>> TOMATO_PLANT_CODEC = CODECS.register("tomato_plant", () -> BlockBehaviour.simpleCodec(TomatoPlantBlock::new));
 
+	public static final DeferredBlock<CornPlantBlock> CORN_PLANT = register("corn_plant", properties -> new CornPlantBlock(properties
+			.mapColor(MapColor.PLANT).noCollission().randomTicks().instabreak().sound(SoundType.CROP).offsetType(BlockBehaviour.OffsetType.XZ).pushReaction(PushReaction.DESTROY)), ID_NAME);
+	public static final Supplier<MapCodec<CornPlantBlock>> CORN_PLANT_CODEC = CODECS.register("corn_plant", () -> BlockBehaviour.simpleCodec(CornPlantBlock::new));
+
 	private static <T extends Block> DeferredBlock<T> register(String id, Function<BlockBehaviour.Properties, T> factory, String name)
 	{
 		DeferredBlock<T> block = BLOCKS.registerBlock(id, factory);

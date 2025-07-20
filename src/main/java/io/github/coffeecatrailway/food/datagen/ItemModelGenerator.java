@@ -93,6 +93,7 @@ public class ItemModelGenerator extends ItemModelProvider
 		this.basicItem(ModItems.TOMATO_SLICE.get());
 		this.basicItem(ModItems.TOMATO_SAUCE.get());
 
+		this.basicItem(ModItems.CORN_COB.get());
 		this.basicItem(ModItems.CORN_KERNELS.get());
 		this.basicItem(ModItems.DRIED_CORN_KERNELS.get());
 

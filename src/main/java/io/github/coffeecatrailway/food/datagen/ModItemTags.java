@@ -141,7 +141,7 @@ public class ModItemTags extends ItemTagsProvider
 
 		this.tag(SEEDS_PINEAPPLE).add(ModItems.PINEAPPLE_CROWN.get());
 		this.tag(SEEDS_TOMATO).add(ModItems.TOMATO_SEEDS.get());
-		this.tag(SEEDS_CORN);
+		this.tag(SEEDS_CORN).add(ModItems.CORN_COB.get());
 		this.tag(Tags.Items.SEEDS).addTags(SEEDS_PINEAPPLE, SEEDS_TOMATO, SEEDS_CORN);
 
 		this.copy(ModBlockTags.MAPLE_LOGS, MAPLE_LOGS);

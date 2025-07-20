@@ -99,7 +99,7 @@ public class ModItems
 	public static final DeferredItem<Item> TOMATO_SLICE = register("tomato_slice", prop -> new Item(prop.food(ModFoods.TOMATO_SLICE).stacksTo(32)), ID_NAME);
 	public static final DeferredItem<Item> TOMATO_SAUCE = register("tomato_sauce", prop -> new Item(prop.food(ModFoods.TOMATO_SAUCE).stacksTo(1)), ID_NAME);
 
-//	public static final DeferredItem<ItemNameBlockItem> CORN_COB = register("corn_cob", prop -> new ItemNameBlockItem(ModBlocks.CORN_PLANT.get(), prop.food(ModFoods.CORN_COB).stacksTo(32)), ID_NAME);
+	public static final DeferredItem<ItemNameBlockItem> CORN_COB = register("corn_cob", prop -> new ItemNameBlockItem(ModBlocks.CORN_PLANT.get(), prop.food(ModFoods.CORN_COB).stacksTo(32)), ID_NAME);
 	public static final DeferredItem<Item> CORN_KERNELS = register("corn_kernels", prop -> new Item(prop.food(ModFoods.CORN_KERNELS)), ID_NAME);
 	public static final DeferredItem<Item> DRIED_CORN_KERNELS = register("dried_corn_kernels", prop -> new Item(prop.food(ModFoods.CORN_KERNELS)), ID_NAME);
 
@@ -154,6 +154,7 @@ public class ModItems
 			LOGGER.debug("Adding to Natural Blocks tab");
 			event.insertAfter(new ItemStack(Items.NETHER_WART), new ItemStack(PINEAPPLE_CROWN.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
 			event.insertAfter(new ItemStack(PINEAPPLE_CROWN.get()), new ItemStack(TOMATO_SEEDS.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+			event.insertAfter(new ItemStack(TOMATO_SEEDS.get()), new ItemStack(CORN_COB.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
 		}
 
 		if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES)

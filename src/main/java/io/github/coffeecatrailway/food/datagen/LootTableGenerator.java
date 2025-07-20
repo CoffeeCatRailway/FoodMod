@@ -1,6 +1,7 @@
 package io.github.coffeecatrailway.food.datagen;
 
 import io.github.coffeecatrailway.food.FoodMod;
+import io.github.coffeecatrailway.food.common.block.CornPlantBlock;
 import io.github.coffeecatrailway.food.common.block.ModBlocks;
 import io.github.coffeecatrailway.food.common.block.PineapplePlantBlock;
 import io.github.coffeecatrailway.food.common.block.TomatoPlantBlock;
@@ -57,31 +58,31 @@ public class LootTableGenerator extends LootTableProvider
 	}
 
 	private record ChestLoot(HolderLookup.Provider lookupProvider) implements LootTableSubProvider
+	{
+
+		@Override
+		public void generate(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> output)
 		{
 
-			@Override
-			public void generate(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> output)
-			{
-
-			}
-
-			private LootPoolSingletonContainer.Builder<?> lootItem(ItemLike item)
-			{
-				return LootItem.lootTableItem(item);
-			}
-
-			private LootPoolSingletonContainer.Builder<?> lootItemWithCount(ItemLike item, int min, int max)
-			{
-				return LootItem.lootTableItem(item).apply(SetItemCountFunction.setCount(UniformGenerator.between(min, max)));
-			}
-
-			private void createTable(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> output, String id, float minRolls, float maxRolls, LootPoolEntryContainer.Builder<?>... entriesBuilder)
-			{
-				LootPool.Builder pool = LootPool.lootPool().setRolls(UniformGenerator.between(minRolls, maxRolls));
-				for (LootPoolEntryContainer.Builder<?> entry : entriesBuilder) pool.add(entry);
-				output.accept(ResourceKey.create(Registries.LOOT_TABLE, FoodMod.id("chests/" + id)), LootTable.lootTable().withPool(pool));
-			}
 		}
+
+		private LootPoolSingletonContainer.Builder<?> lootItem(ItemLike item)
+		{
+			return LootItem.lootTableItem(item);
+		}
+
+		private LootPoolSingletonContainer.Builder<?> lootItemWithCount(ItemLike item, int min, int max)
+		{
+			return LootItem.lootTableItem(item).apply(SetItemCountFunction.setCount(UniformGenerator.between(min, max)));
+		}
+
+		private void createTable(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> output, String id, float minRolls, float maxRolls, LootPoolEntryContainer.Builder<?>... entriesBuilder)
+		{
+			LootPool.Builder pool = LootPool.lootPool().setRolls(UniformGenerator.between(minRolls, maxRolls));
+			for (LootPoolEntryContainer.Builder<?> entry : entriesBuilder) pool.add(entry);
+			output.accept(ResourceKey.create(Registries.LOOT_TABLE, FoodMod.id("chests/" + id)), LootTable.lootTable().withPool(pool));
+		}
+	}
 
 	private static class EntityLoot extends EntityLootSubProvider
 	{
@@ -139,10 +140,26 @@ public class LootTableGenerator extends LootTableProvider
 									.apply(ApplyBonusCount.addBonusBinomialDistributionCount(fortune, .65f, 3))
 									.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
 											.setProperties(StatePropertiesPredicate.Builder.properties()
-													.hasProperty(TomatoPlantBlock.AGE, tomatoMaxAge).hasProperty(TomatoPlantBlock.HALF, DoubleBlockHalf.LOWER)))
+													.hasProperty(TomatoPlantBlock.AGE, tomatoMaxAge)
+													.hasProperty(TomatoPlantBlock.HALF, DoubleBlockHalf.LOWER)))
 									.otherwise(LootItem.lootTableItem(ModItems.TOMATO_SEEDS.get())
 											.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
-													.setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(TomatoPlantBlock.HALF, DoubleBlockHalf.LOWER))))))));
+													.setProperties(StatePropertiesPredicate.Builder.properties()
+															.hasProperty(TomatoPlantBlock.HALF, DoubleBlockHalf.LOWER))))))));
+
+			int cornMaxAge = ModBlocks.CORN_PLANT.get().getMaxAge();
+			this.add(ModBlocks.CORN_PLANT.get(), block -> LootTable.lootTable()
+					.withPool(this.applyExplosionCondition(block, LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+							.add(LootItem.lootTableItem(ModItems.CORN_COB.get())
+									.apply(ApplyBonusCount.addBonusBinomialDistributionCount(fortune, .5714286f, 2))
+									.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
+											.setProperties(StatePropertiesPredicate.Builder.properties()
+													.hasProperty(CornPlantBlock.AGE, cornMaxAge)
+													.hasProperty(CornPlantBlock.HALF, DoubleBlockHalf.LOWER)))
+									.otherwise(LootItem.lootTableItem(ModItems.CORN_COB.get())
+											.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
+													.setProperties(StatePropertiesPredicate.Builder.properties()
+															.hasProperty(CornPlantBlock.HALF, DoubleBlockHalf.LOWER))))))));
 		}
 
 		@Override

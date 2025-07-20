@@ -1,6 +1,7 @@
 package io.github.coffeecatrailway.food.datagen;
 
 import io.github.coffeecatrailway.food.FoodMod;
+import io.github.coffeecatrailway.food.common.block.CornPlantBlock;
 import io.github.coffeecatrailway.food.common.block.ModBlocks;
 import io.github.coffeecatrailway.food.common.block.PineapplePlantBlock;
 import io.github.coffeecatrailway.food.common.block.TomatoPlantBlock;
@@ -41,8 +42,18 @@ public class BlockModelGenerator extends BlockStateProvider
 			DoubleBlockHalf half = state.getValue(TomatoPlantBlock.HALF);
 
 			String path = "tomato_plant_" + half.getSerializedName() + "_stage_" + age;
-
 			BlockModelBuilder model = this.models().withExistingParent(path, ResourceLocation.withDefaultNamespace("block/crop")).texture("crop", FoodMod.id("block/" + path)).renderType(RenderType.CUTOUT.name);
+
+			return ConfiguredModel.builder().modelFile(model).build();
+		});
+
+		this.getVariantBuilder(ModBlocks.CORN_PLANT.get()).forAllStates(state -> {
+			int age = state.getValue(CornPlantBlock.AGE);
+			DoubleBlockHalf half = state.getValue(CornPlantBlock.HALF);
+
+			String path = "corn_plant_" + half.getSerializedName() + "_stage_" + age;
+			String texture = (age < 3 && half == DoubleBlockHalf.UPPER) ? "empty" : path;
+			BlockModelBuilder model = this.models().withExistingParent(path, ResourceLocation.withDefaultNamespace("block/cross")).texture("cross", "block/" + texture).renderType(RenderType.CUTOUT.name);
 
 			return ConfiguredModel.builder().modelFile(model).build();
 		});
