@@ -1,7 +1,5 @@
 package io.github.coffeecatrailway.food.common.block;
 
-import com.mojang.serialization.MapCodec;
-import io.github.coffeecatrailway.food.common.item.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -24,7 +22,6 @@ import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.common.CommonHooks;
 import org.jetbrains.annotations.Nullable;
@@ -33,56 +30,32 @@ import org.jetbrains.annotations.Nullable;
  * @author CoffeeCatRailway
  * Created: 20/07/2025
  */
-public class CornPlantBlock extends CropBlock
+public abstract class DoubleCropBlock extends CropBlock
 {
 	public static final EnumProperty<DoubleBlockHalf> HALF = BlockStateProperties.DOUBLE_BLOCK_HALF;
-	public static final int MAX_AGE = 6;
-	public static final IntegerProperty AGE = IntegerProperty.create("age", 0, MAX_AGE);
-
-	private static final VoxelShape[] SHAPES_UPPER = new VoxelShape[]{
-			Block.box(6d, -16d, 6d, 10d, -15d, 10d),
-			Block.box(6d, -16d, 6d, 10d, -15d, 10d),
-			Block.box(6d, -16d, 6d, 10d, -15d, 10d),
-			Block.box(4d, 0d, 4d, 12d, 5d, 12d),
-			Block.box(4d, 0d, 4d, 12d, 9d, 12d),
-			Block.box(4d, 0d, 4d, 12d, 14d, 12d),
-			Block.box(3d, 0d, 3d, 13d, 15d, 13d)
-	};
-	private static final VoxelShape[] SHAPES_LOWER = new VoxelShape[]{
-			Block.box(6d, 0d, 6d, 10d, 7d, 10d),
-			Block.box(4d, 0d, 4d, 12d, 11d, 12d),
-			Block.box(3d, 0d, 3d, 12d, 16d, 12d),
-			Block.box(3d, 0d, 3d, 13d, 16d, 13d),
-			Block.box(3d, 0d, 3d, 13d, 16d, 13d),
-			Block.box(3d, 0d, 3d, 13d, 16d, 13d),
-			Block.box(3d, 0d, 3d, 13d, 16d, 13d)
-	};
-
-	public CornPlantBlock(Properties properties)
+	
+	public DoubleCropBlock(Properties properties)
 	{
 		super(properties);
-		this.registerDefaultState(this.stateDefinition.any().setValue(HALF, DoubleBlockHalf.LOWER).setValue(AGE, 0));
+		this.registerDefaultState(this.stateDefinition.any().setValue(HALF, DoubleBlockHalf.LOWER).setValue(this.getAgeProperty(), 0));
 	}
 
-	// Crop Block
+	protected abstract VoxelShape[] getUpperShapes();
+
+	protected abstract VoxelShape[] getLowerShapes();
+	
 	@Override
 	protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context)
 	{
-		int age = state.getValue(AGE);
-		return state.getValue(HALF) == DoubleBlockHalf.UPPER ? SHAPES_UPPER[age] : SHAPES_LOWER[age];
+		int age = state.getValue(this.getAgeProperty());
+		return state.getValue(HALF) == DoubleBlockHalf.UPPER ? this.getUpperShapes()[age] : this.getLowerShapes()[age];
 	}
+	
+	@Override
+	protected abstract IntegerProperty getAgeProperty();
 
 	@Override
-	protected IntegerProperty getAgeProperty()
-	{
-		return AGE;
-	}
-
-	@Override
-	public int getMaxAge()
-	{
-		return MAX_AGE;
-	}
+	public abstract int getMaxAge();
 
 	@Override
 	public BlockState getStateForAge(int age)
@@ -91,10 +64,7 @@ public class CornPlantBlock extends CropBlock
 	}
 
 	@Override
-	protected ItemLike getBaseSeedId()
-	{
-		return ModItems.CORN_COB;
-	}
+	protected abstract ItemLike getBaseSeedId();
 
 	@Override
 	protected boolean isRandomlyTicking(BlockState state)
@@ -109,7 +79,7 @@ public class CornPlantBlock extends CropBlock
 			return; // Forge: prevent loading unloaded chunks when checking neighbor's light
 		if (level.getRawBrightness(pos, 0) >= 9)
 		{
-			int age = state.getValue(AGE);
+			int age = state.getValue(this.getAgeProperty());
 			if (age < this.getMaxAge())
 			{
 				float growthSpeed = CropBlock.getGrowthSpeed(state, level, pos);
@@ -141,8 +111,6 @@ public class CornPlantBlock extends CropBlock
 			level.setBlock(pos.above(), this.getStateForAge(newAge).setValue(HALF, DoubleBlockHalf.UPPER), 2);
 		}
 	}
-
-	// Double Plant Block
 	@Override
 	protected BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor level, BlockPos currentPos, BlockPos facingPos)
 	{
@@ -192,7 +160,7 @@ public class CornPlantBlock extends CropBlock
 		if (!level.isClientSide)
 		{
 			if (player.isCreative())
-				TomatoPlantBlock.preventDropFromBottomPart(level, pos, state, player);
+				DoubleCropBlock.preventDropFromBottomPart(level, pos, state, player);
 			else
 				Block.dropResources(state, level, pos, null, player, player.getMainHandItem());
 		}
@@ -206,15 +174,25 @@ public class CornPlantBlock extends CropBlock
 		super.playerDestroy(level, player, pos, Blocks.AIR.defaultBlockState(), te, stack);
 	}
 
-	@Override
-	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder)
+	public static void preventDropFromBottomPart(Level level, BlockPos pos, BlockState state, Player player)
 	{
-		builder.add(HALF, AGE);
+		DoubleBlockHalf half = state.getValue(HALF);
+		if (half == DoubleBlockHalf.UPPER)
+		{
+			BlockPos posBelow = pos.below();
+			BlockState stateBelow = level.getBlockState(posBelow);
+			if (stateBelow.is(state.getBlock()) && stateBelow.getValue(HALF) == DoubleBlockHalf.LOWER)
+			{
+				BlockState fluidStateBelow = stateBelow.getFluidState().is(Fluids.WATER) ? Blocks.WATER.defaultBlockState() : Blocks.AIR.defaultBlockState();
+				level.setBlock(posBelow, fluidStateBelow, 35);
+				level.levelEvent(player, 2001, posBelow, Block.getId(stateBelow));
+			}
+		}
 	}
 
 	@Override
-	public MapCodec<? extends CropBlock> codec()
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder)
 	{
-		return ModBlocks.CORN_PLANT_CODEC.get();
+		builder.add(HALF, this.getAgeProperty());
 	}
 }

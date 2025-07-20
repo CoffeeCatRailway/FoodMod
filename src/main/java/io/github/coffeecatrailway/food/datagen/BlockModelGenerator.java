@@ -1,10 +1,10 @@
 package io.github.coffeecatrailway.food.datagen;
 
 import io.github.coffeecatrailway.food.FoodMod;
-import io.github.coffeecatrailway.food.common.block.CornPlantBlock;
+import io.github.coffeecatrailway.food.common.block.CornCropBlock;
 import io.github.coffeecatrailway.food.common.block.ModBlocks;
-import io.github.coffeecatrailway.food.common.block.PineapplePlantBlock;
-import io.github.coffeecatrailway.food.common.block.TomatoPlantBlock;
+import io.github.coffeecatrailway.food.common.block.PineappleCropBlock;
+import io.github.coffeecatrailway.food.common.block.TomatoCropBlock;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
@@ -28,8 +28,8 @@ public class BlockModelGenerator extends BlockStateProvider
 	@Override
 	protected void registerStatesAndModels()
 	{
-		this.getVariantBuilder(ModBlocks.PINEAPPLE_PLANT.get()).forAllStates(state -> {
-			int age = state.getValue(PineapplePlantBlock.AGE);
+		this.getVariantBuilder(ModBlocks.PINEAPPLE_CROP.get()).forAllStates(state -> {
+			int age = state.getValue(PineappleCropBlock.AGE);
 
 			String path = "pineapple_plant_stage_" + age;
 			BlockModelBuilder model = this.models().withExistingParent(path, FoodMod.id("block/pineapple_plant")).texture("texture", FoodMod.id("block/" + path)).renderType(RenderType.CUTOUT.name);
@@ -37,9 +37,9 @@ public class BlockModelGenerator extends BlockStateProvider
 			return ConfiguredModel.builder().modelFile(model).build();
 		});
 
-		this.getVariantBuilder(ModBlocks.TOMATO_PLANT.get()).forAllStates(state -> {
-			int age = state.getValue(TomatoPlantBlock.AGE);
-			DoubleBlockHalf half = state.getValue(TomatoPlantBlock.HALF);
+		this.getVariantBuilder(ModBlocks.TOMATO_CROP.get()).forAllStates(state -> {
+			int age = state.getValue(TomatoCropBlock.AGE);
+			DoubleBlockHalf half = state.getValue(TomatoCropBlock.HALF);
 
 			String path = "tomato_plant_" + half.getSerializedName() + "_stage_" + age;
 			BlockModelBuilder model = this.models().withExistingParent(path, ResourceLocation.withDefaultNamespace("block/crop")).texture("crop", FoodMod.id("block/" + path)).renderType(RenderType.CUTOUT.name);
@@ -47,9 +47,9 @@ public class BlockModelGenerator extends BlockStateProvider
 			return ConfiguredModel.builder().modelFile(model).build();
 		});
 
-		this.getVariantBuilder(ModBlocks.CORN_PLANT.get()).forAllStates(state -> {
-			int age = state.getValue(CornPlantBlock.AGE);
-			DoubleBlockHalf half = state.getValue(CornPlantBlock.HALF);
+		this.getVariantBuilder(ModBlocks.CORN_CROP.get()).forAllStates(state -> {
+			int age = state.getValue(CornCropBlock.AGE);
+			DoubleBlockHalf half = state.getValue(CornCropBlock.HALF);
 
 			String path = "corn_plant_" + half.getSerializedName() + "_stage_" + age;
 			String texture = (age < 3 && half == DoubleBlockHalf.UPPER) ? "empty" : path;

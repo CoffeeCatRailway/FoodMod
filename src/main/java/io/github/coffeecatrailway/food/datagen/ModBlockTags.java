@@ -45,7 +45,7 @@ public class ModBlockTags extends BlockTagsProvider
 
 		this.tag(CHOPPING_BOARDS);// leaves
 
-		this.tag(BlockTags.CROPS).add(ModBlocks.PINEAPPLE_PLANT.get(), ModBlocks.TOMATO_PLANT.get(), ModBlocks.CORN_PLANT.get());
+		this.tag(BlockTags.CROPS).add(ModBlocks.PINEAPPLE_CROP.get(), ModBlocks.TOMATO_CROP.get(), ModBlocks.CORN_CROP.get());
 
 		this.tag(BlockTags.MINEABLE_WITH_AXE).addTag(CHOPPING_BOARDS);
 		this.tag(BlockTags.MINEABLE_WITH_PICKAXE);// grill, pizza oven, popcorn machine, tree tap

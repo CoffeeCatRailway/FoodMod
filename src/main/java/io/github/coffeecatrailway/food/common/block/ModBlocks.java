@@ -30,17 +30,17 @@ public class ModBlocks
 	public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(FoodMod.MODID);
 	public static final DeferredRegister<MapCodec<? extends Block>> CODECS = DeferredRegister.create(BuiltInRegistries.BLOCK_TYPE, FoodMod.MODID);
 
-	public static final DeferredBlock<PineapplePlantBlock> PINEAPPLE_PLANT = register("pineapple_plant", properties -> new PineapplePlantBlock(properties
+	public static final DeferredBlock<PineappleCropBlock> PINEAPPLE_CROP = register("pineapple_plant", properties -> new PineappleCropBlock(properties
 			.mapColor(MapColor.PLANT).noCollission().randomTicks().instabreak().sound(SoundType.CROP).offsetType(BlockBehaviour.OffsetType.XZ).pushReaction(PushReaction.DESTROY)), ID_NAME);
-	public static final Supplier<MapCodec<PineapplePlantBlock>> PINEAPPLE_PLANT_CODEC = CODECS.register("pineapple_plant", () -> BlockBehaviour.simpleCodec(PineapplePlantBlock::new));
+	public static final Supplier<MapCodec<PineappleCropBlock>> PINEAPPLE_CROP_CODEC = CODECS.register("pineapple_plant", () -> BlockBehaviour.simpleCodec(PineappleCropBlock::new));
 
-	public static final DeferredBlock<TomatoPlantBlock> TOMATO_PLANT = register("tomato_plant", properties -> new TomatoPlantBlock(properties
+	public static final DeferredBlock<TomatoCropBlock> TOMATO_CROP = register("tomato_plant", properties -> new TomatoCropBlock(properties
 			.mapColor(MapColor.PLANT).noCollission().randomTicks().instabreak().sound(SoundType.CROP).pushReaction(PushReaction.DESTROY)), ID_NAME);
-	public static final Supplier<MapCodec<TomatoPlantBlock>> TOMATO_PLANT_CODEC = CODECS.register("tomato_plant", () -> BlockBehaviour.simpleCodec(TomatoPlantBlock::new));
+	public static final Supplier<MapCodec<TomatoCropBlock>> TOMATO_CROP_CODEC = CODECS.register("tomato_plant", () -> BlockBehaviour.simpleCodec(TomatoCropBlock::new));
 
-	public static final DeferredBlock<CornPlantBlock> CORN_PLANT = register("corn_plant", properties -> new CornPlantBlock(properties
+	public static final DeferredBlock<CornCropBlock> CORN_CROP = register("corn_plant", properties -> new CornCropBlock(properties
 			.mapColor(MapColor.PLANT).noCollission().randomTicks().instabreak().sound(SoundType.CROP).offsetType(BlockBehaviour.OffsetType.XZ).pushReaction(PushReaction.DESTROY)), ID_NAME);
-	public static final Supplier<MapCodec<CornPlantBlock>> CORN_PLANT_CODEC = CODECS.register("corn_plant", () -> BlockBehaviour.simpleCodec(CornPlantBlock::new));
+	public static final Supplier<MapCodec<CornCropBlock>> CORN_CROP_CODEC = CODECS.register("corn_plant", () -> BlockBehaviour.simpleCodec(CornCropBlock::new));
 
 	private static <T extends Block> DeferredBlock<T> register(String id, Function<BlockBehaviour.Properties, T> factory, String name)
 	{

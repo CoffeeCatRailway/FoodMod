@@ -89,17 +89,17 @@ public class ModItems
 
 	public static final DeferredItem<SandwichItem> SANDWICH = register("sandwich", SandwichItem::new, ID_NAME);
 
-	public static final DeferredItem<ItemNameBlockItem> PINEAPPLE_CROWN = register("pineapple_crown", prop -> new ItemNameBlockItem(ModBlocks.PINEAPPLE_PLANT.get(), prop), ID_NAME);
+	public static final DeferredItem<ItemNameBlockItem> PINEAPPLE_CROWN = register("pineapple_crown", prop -> new ItemNameBlockItem(ModBlocks.PINEAPPLE_CROP.get(), prop), ID_NAME);
 	public static final DeferredItem<Item> PINEAPPLE = register("pineapple", prop -> new Item(prop.food(ModFoods.PINEAPPLE).stacksTo(16)), ID_NAME);
 	public static final DeferredItem<Item> PINEAPPLE_RING = register("pineapple_ring", prop -> new Item(prop.food(ModFoods.PINEAPPLE_RING).stacksTo(32)), ID_NAME);
 	public static final DeferredItem<Item> PINEAPPLE_BITES = register("pineapple_bites", prop -> new Item(prop.food(ModFoods.PINEAPPLE_BITES)), ID_NAME);
 
-	public static final DeferredItem<ItemNameBlockItem> TOMATO_SEEDS = register("tomato_seeds", prop -> new ItemNameBlockItem(ModBlocks.TOMATO_PLANT.get(), prop), ID_NAME);
+	public static final DeferredItem<ItemNameBlockItem> TOMATO_SEEDS = register("tomato_seeds", prop -> new ItemNameBlockItem(ModBlocks.TOMATO_CROP.get(), prop), ID_NAME);
 	public static final DeferredItem<Item> TOMATO = register("tomato", prop -> new Item(prop.food(ModFoods.TOMATO)), ID_NAME);
 	public static final DeferredItem<Item> TOMATO_SLICE = register("tomato_slice", prop -> new Item(prop.food(ModFoods.TOMATO_SLICE).stacksTo(32)), ID_NAME);
 	public static final DeferredItem<Item> TOMATO_SAUCE = register("tomato_sauce", prop -> new Item(prop.food(ModFoods.TOMATO_SAUCE).stacksTo(1)), ID_NAME);
 
-	public static final DeferredItem<ItemNameBlockItem> CORN_COB = register("corn_cob", prop -> new ItemNameBlockItem(ModBlocks.CORN_PLANT.get(), prop.food(ModFoods.CORN_COB).stacksTo(32)), ID_NAME);
+	public static final DeferredItem<ItemNameBlockItem> CORN_COB = register("corn_cob", prop -> new ItemNameBlockItem(ModBlocks.CORN_CROP.get(), prop.food(ModFoods.CORN_COB).stacksTo(32)), ID_NAME);
 	public static final DeferredItem<Item> CORN_KERNELS = register("corn_kernels", prop -> new Item(prop.food(ModFoods.CORN_KERNELS)), ID_NAME);
 	public static final DeferredItem<Item> DRIED_CORN_KERNELS = register("dried_corn_kernels", prop -> new Item(prop.food(ModFoods.CORN_KERNELS)), ID_NAME);
 

@@ -18,7 +18,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
  * @author CoffeeCatRailway
  * Created: 11/07/2025
  */
-public class PineapplePlantBlock extends CropBlock
+public class PineappleCropBlock extends CropBlock
 {
 	public static final IntegerProperty AGE = IntegerProperty.create("age", 0, 4);
 
@@ -30,7 +30,7 @@ public class PineapplePlantBlock extends CropBlock
 			Block.box(3d, 0d, 3d, 13d, 16d, 13d)
 	};
 
-	public PineapplePlantBlock(Properties properties)
+	public PineappleCropBlock(Properties properties)
 	{
 		super(properties);
 	}
@@ -74,6 +74,6 @@ public class PineapplePlantBlock extends CropBlock
 	@Override
 	public MapCodec<? extends CropBlock> codec()
 	{
-		return ModBlocks.PINEAPPLE_PLANT_CODEC.get();
+		return ModBlocks.PINEAPPLE_CROP_CODEC.get();
 	}
 }
