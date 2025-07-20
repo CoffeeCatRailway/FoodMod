@@ -5,6 +5,7 @@ import io.github.coffeecatrailway.food.common.item.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -62,6 +63,12 @@ public class PineapplePlantBlock extends CropBlock
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder)
 	{
 		builder.add(AGE);
+	}
+
+	@Override
+	protected boolean canSurvive(BlockState state, LevelReader level, BlockPos pos)
+	{
+		return super.canSurvive(state, level, pos) && level.getBlockState(pos.above()).isAir();
 	}
 
 	@Override
