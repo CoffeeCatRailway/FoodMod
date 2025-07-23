@@ -160,6 +160,8 @@ public class LootTableGenerator extends LootTableProvider
 											.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
 													.setProperties(StatePropertiesPredicate.Builder.properties()
 															.hasProperty(CornCropBlock.HALF, DoubleBlockHalf.LOWER))))))));
+
+			ModBlocks.CHOPPING_BOARDS.get().forEach(this::dropSelf);
 		}
 
 		@Override

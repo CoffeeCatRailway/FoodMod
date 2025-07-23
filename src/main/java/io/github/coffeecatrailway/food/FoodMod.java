@@ -4,6 +4,8 @@ import com.mojang.logging.LogUtils;
 import io.github.coffeecatrailway.food.client.extensions.common.FoodComboStackedExtension;
 import io.github.coffeecatrailway.food.client.extensions.common.PizzaExtension;
 import io.github.coffeecatrailway.food.common.block.ModBlocks;
+import io.github.coffeecatrailway.food.common.block.entity.ModBlockEntities;
+import io.github.coffeecatrailway.food.common.item.ModCreativeTabs;
 import io.github.coffeecatrailway.food.common.item.ModItems;
 import io.github.coffeecatrailway.food.common.item.component.ModComponents;
 import io.github.coffeecatrailway.food.common.item.crafting.ModRecipes;
@@ -37,10 +39,11 @@ public class FoodMod
 		ModBlocks.init(modEventBus);
 		ModItems.init(modEventBus);
 		ModRecipes.init(modEventBus);
+		ModCreativeTabs.init(modEventBus);
+		ModBlockEntities.init(modEventBus);
 
 		modEventBus.addListener(this::clientExt);
 		modEventBus.addListener(this::onGatherData);
-//		NeoForge.EVENT_BUS.addListener(FoodMod::registerGeometryLoaders);
 
 		FoodConfigs.init(modContainer);
 	}

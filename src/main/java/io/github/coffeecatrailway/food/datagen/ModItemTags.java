@@ -76,7 +76,7 @@ public class ModItemTags extends ItemTagsProvider
 
 	public static final TagKey<Item> MAPLE_LOGS = tagCommon("maple_logs");
 
-	public static final TagKey<Item> CHOPPING_BOARDS = tag("maple_logs");
+	public static final TagKey<Item> CHOPPING_BOARDS = tag("chopping_boards");
 
 	public ModItemTags(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, CompletableFuture<TagLookup<Block>> blockTagLookup, @Nullable ExistingFileHelper existingFileHelper)
 	{

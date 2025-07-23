@@ -58,6 +58,8 @@ public class LanguageGenerator extends LanguageProvider
 		this.addConfig(FoodConfigs.SERVER.saturationModifier, "Saturation Modifier");
 		this.addConfig(FoodConfigs.SERVER.crackedEggSpawnChance, "Cracked Egg Spawn Chance");
 
+		this.add("itemGroup." + FoodMod.MODID + ".tab", "Coffee's Fun Foods");
+
 		ITEMS.forEach(this::addItem);
 		BLOCKS.forEach(this::addBlock);
 	}

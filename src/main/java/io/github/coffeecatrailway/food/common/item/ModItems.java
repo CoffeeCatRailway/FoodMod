@@ -11,7 +11,6 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.slf4j.Logger;
@@ -143,113 +142,5 @@ public class ModItems
 	{
 		LOGGER.debug("Registering items");
 		ModItems.ITEMS.register(modEventBus);
-
-		modEventBus.addListener(ModItems::addCreative);
-	}
-
-	private static void addCreative(BuildCreativeModeTabContentsEvent event)
-	{
-		if (event.getTabKey() == CreativeModeTabs.NATURAL_BLOCKS)
-		{
-			LOGGER.debug("Adding to Natural Blocks tab");
-			event.insertAfter(new ItemStack(Items.NETHER_WART), new ItemStack(PINEAPPLE_CROWN.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-			event.insertAfter(new ItemStack(PINEAPPLE_CROWN.get()), new ItemStack(TOMATO_SEEDS.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-			event.insertAfter(new ItemStack(TOMATO_SEEDS.get()), new ItemStack(CORN_COB.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-		}
-
-		if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES)
-		{
-			LOGGER.debug("Adding to Tools And Utilities tab");
-			final ItemStack WOODEN_HOE = new ItemStack(Items.WOODEN_HOE);
-			final ItemStack STONE_HOE = new ItemStack(Items.STONE_HOE);
-			final ItemStack GOLDEN_HOE = new ItemStack(Items.GOLDEN_HOE);
-			final ItemStack IRON_HOE = new ItemStack(Items.IRON_HOE);
-			final ItemStack DIAMOND_HOE = new ItemStack(Items.DIAMOND_HOE);
-			final ItemStack NETHERITE_HOE = new ItemStack(Items.NETHERITE_HOE);
-
-			event.insertAfter(WOODEN_HOE, new ItemStack(CURDLER_WOODEN.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-			event.insertAfter(STONE_HOE, new ItemStack(CURDLER_STONE.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-
-			event.insertAfter(WOODEN_HOE, new ItemStack(ROLLING_PIN_WOODEN.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-			event.insertAfter(STONE_HOE, new ItemStack(ROLLING_PIN_STONE.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-
-			event.insertAfter(WOODEN_HOE, new ItemStack(KNIFE_WOODEN.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-			event.insertAfter(STONE_HOE, new ItemStack(KNIFE_STONE.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-			event.insertAfter(GOLDEN_HOE, new ItemStack(KNIFE_GOLD.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-			event.insertAfter(IRON_HOE, new ItemStack(KNIFE_IRON.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-			event.insertAfter(DIAMOND_HOE, new ItemStack(KNIFE_DIAMOND.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-			event.insertAfter(NETHERITE_HOE, new ItemStack(KNIFE_NETHERITE.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-
-			event.accept(GRIND_STONES);
-			event.accept(KNIFE_COPPER);
-		}
-
-		if (event.getTabKey() == CreativeModeTabs.FOOD_AND_DRINKS)
-		{
-			LOGGER.debug("Adding to Food And Drinks tab");
-			event.insertBefore(new ItemStack(Items.BREAD), new ItemStack(DOUGH.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-
-			event.insertAfter(new ItemStack(DOUGH.get()), new ItemStack(UNFIRED_PIZZA_BASE.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-			event.insertAfter(new ItemStack(UNFIRED_PIZZA_BASE.get()), new ItemStack(FIRED_PIZZA_BASE.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-
-			event.insertAfter(new ItemStack(FIRED_PIZZA_BASE.get()), new ItemStack(UNBAKED_BREAD.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-			event.insertAfter(new ItemStack(Items.BREAD), new ItemStack(BREAD_SLICE.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-			event.insertAfter(new ItemStack(BREAD_SLICE.get()), new ItemStack(TOAST.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-			event.insertAfter(new ItemStack(TOAST.get()), new ItemStack(MOLDY_BREAD_SLICE.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-			event.insertAfter(new ItemStack(MOLDY_BREAD_SLICE.get()), new ItemStack(UNBAKED_CRACKER.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-			event.insertAfter(new ItemStack(UNBAKED_CRACKER.get()), new ItemStack(CRACKER.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-
-			event.insertAfter(new ItemStack(Items.PORKCHOP), new ItemStack(HAM_SLICE.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-			event.insertAfter(new ItemStack(HAM_SLICE.get()), new ItemStack(RAW_BACON.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-			event.insertAfter(new ItemStack(RAW_BACON.get()), new ItemStack(GREEN_HAM_SLICE.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-			event.insertAfter(new ItemStack(Items.COOKED_PORKCHOP), new ItemStack(COOKED_HAM_SLICE.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-			event.insertAfter(new ItemStack(COOKED_HAM_SLICE.get()), new ItemStack(COOKED_BACON.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-
-			event.accept(CHEESE_SLICE);
-			event.accept(BLUE_CHEESE_SLICE);
-			event.accept(GOUDA_CHEESE_SLICE);
-			event.accept(SWISS_CHEESE_SLICE);
-			event.accept(SWISS_CHEESE_BITES);
-			event.accept(GOAT_CHEESE_SLICE);
-
-			event.accept(SALT);
-			event.accept(FLOUR);
-
-			event.accept(CRACKED_EGG);
-			event.accept(FRIED_EGG);
-			event.accept(GREEN_CRACKED_EGG);
-
-			event.accept(PINEAPPLE);
-			event.accept(PINEAPPLE_RING);
-			event.accept(PINEAPPLE_BITES);
-
-			event.accept(TOMATO);
-			event.accept(TOMATO_SLICE);
-			event.accept(TOMATO_SAUCE);
-
-			event.accept(CORN_KERNELS);
-			event.accept(DRIED_CORN_KERNELS);
-
-			event.accept(POPCORN_BAG);
-			event.accept(POPCORN);
-			event.accept(CHEESY_POPCORN);
-			event.accept(CARAMEL_POPCORN);
-			event.accept(MAPLE_POPCORN);
-
-			event.accept(MOUSE);
-			event.accept(COOKED_MOUSE);
-
-			event.accept(FOOD_SCRAPS);
-
-			event.accept(MAPLE_SAP_BOTTLE);
-			event.accept(MAPLE_SYRUP);
-		}
-
-		if (event.getTabKey() == CreativeModeTabs.INGREDIENTS)
-		{
-			LOGGER.debug("Adding to Ingredients tab");
-			event.accept(GEAR_WOODEN);
-			event.accept(GEAR_STONE);
-		}
 	}
 }

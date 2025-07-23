@@ -1,6 +1,7 @@
 package io.github.coffeecatrailway.food.datagen;
 
 import io.github.coffeecatrailway.food.FoodMod;
+import io.github.coffeecatrailway.food.common.block.ChoppingBoardBlock;
 import io.github.coffeecatrailway.food.common.block.ModBlocks;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
@@ -43,7 +44,7 @@ public class ModBlockTags extends BlockTagsProvider
 
 		this.tag(MINEABLE_WITH_KNIFE);// cheese blocks
 
-		this.tag(CHOPPING_BOARDS);// leaves
+		this.tag(CHOPPING_BOARDS).add(ModBlocks.CHOPPING_BOARDS.get().toArray(new ChoppingBoardBlock[0]));
 
 		this.tag(BlockTags.CROPS).add(ModBlocks.PINEAPPLE_CROP.get(), ModBlocks.TOMATO_CROP.get(), ModBlocks.CORN_CROP.get());
 
