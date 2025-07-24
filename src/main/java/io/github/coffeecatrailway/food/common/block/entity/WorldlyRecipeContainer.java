@@ -190,8 +190,8 @@ public interface WorldlyRecipeContainer<T extends BlockEntity> extends Container
 
 	default void save(CompoundTag tag, HolderLookup.Provider levelRegistry)
 	{
-		saveEveryItem(tag, this.getInventory(), false, levelRegistry);
-//		ContainerHelper.saveAllItems(tag, this.getInventory(), levelRegistry);
+//		saveEveryItem(tag, this.getInventory(), levelRegistry);
+		ContainerHelper.saveAllItems(tag, this.getInventory(), levelRegistry);
 		ListTag recipesUsedTag = new ListTag();
 		this.getRecipeAmounts().forEach((location, amount) -> {
 			CompoundTag obj = new CompoundTag();
@@ -202,23 +202,23 @@ public interface WorldlyRecipeContainer<T extends BlockEntity> extends Container
 		tag.put("RecipesUsed", recipesUsedTag);
 	}
 
-	static CompoundTag saveEveryItem(CompoundTag tag, NonNullList<ItemStack> nonNullList, boolean includeEmpty, HolderLookup.Provider levelRegistry)
-	{
-		ListTag itemsTag = new ListTag();
-		for (int i = 0; i < nonNullList.size(); ++i)
-		{
-			ItemStack stack = nonNullList.get(i);
-			if (!stack.isEmpty() || includeEmpty)
-			{
-				CompoundTag slotTag = new CompoundTag();
-				slotTag.putByte("Slot", (byte) i);
-				itemsTag.add(stack.save(levelRegistry, slotTag));
-			}
-		}
-
-		tag.put("Items", itemsTag);
-		return tag;
-	}
+//	static CompoundTag saveEveryItem(CompoundTag tag, NonNullList<ItemStack> nonNullList, HolderLookup.Provider levelRegistry)
+//	{
+//		ListTag itemsTag = new ListTag();
+//		for (int i = 0; i < nonNullList.size(); ++i)
+//		{
+//			ItemStack stack = nonNullList.get(i);
+//			if (!stack.isEmpty())
+//			{
+//				CompoundTag slotTag = new CompoundTag();
+//				slotTag.putByte("Slot", (byte) i);
+//				itemsTag.add(stack.save(levelRegistry, slotTag));
+//			}
+//		}
+//
+//		tag.put("Items", itemsTag);
+//		return tag;
+//	}
 
 	default boolean hasItems(int startSlot, int endSlot)
 	{

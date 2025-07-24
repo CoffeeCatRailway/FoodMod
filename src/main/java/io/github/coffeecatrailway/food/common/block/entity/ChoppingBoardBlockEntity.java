@@ -10,6 +10,7 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.Containers;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -121,7 +122,8 @@ public class ChoppingBoardBlockEntity extends BlockEntity implements WorldlyReci
 	@Override
 	public CompoundTag getUpdateTag(HolderLookup.Provider registries)
 	{
-		return WorldlyRecipeContainer.saveEveryItem(new CompoundTag(), this.inventory, false, registries);
+//		return WorldlyRecipeContainer.saveEveryItem(new CompoundTag(), this.inventory, registries);
+		return ContainerHelper.saveAllItems(new CompoundTag(), this.inventory, registries);
 	}
 
 	@Override
