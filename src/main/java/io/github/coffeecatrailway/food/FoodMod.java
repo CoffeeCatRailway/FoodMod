@@ -3,6 +3,8 @@ package io.github.coffeecatrailway.food;
 import com.mojang.logging.LogUtils;
 import io.github.coffeecatrailway.food.client.extensions.common.FoodComboStackedExtension;
 import io.github.coffeecatrailway.food.client.extensions.common.PizzaExtension;
+import io.github.coffeecatrailway.food.common.ModStats;
+import io.github.coffeecatrailway.food.common.advancements.ModCriteriaTriggers;
 import io.github.coffeecatrailway.food.common.block.ModBlocks;
 import io.github.coffeecatrailway.food.common.block.entity.ModBlockEntities;
 import io.github.coffeecatrailway.food.common.item.ModCreativeTabs;
@@ -41,6 +43,8 @@ public class FoodMod
 		ModRecipes.init(modEventBus);
 		ModCreativeTabs.init(modEventBus);
 		ModBlockEntities.init(modEventBus);
+		ModCriteriaTriggers.init(modEventBus);
+		ModStats.init(modEventBus);
 
 		modEventBus.addListener(this::clientExt);
 		modEventBus.addListener(this::onGatherData);
@@ -64,12 +68,13 @@ public class FoodMod
 
 		generator.addProvider(event.includeClient(), new BlockModelGenerator(output, existingFileHelper));
 		generator.addProvider(event.includeClient(), new ItemModelGenerator(output, existingFileHelper));
-		generator.addProvider(event.includeClient(), new LanguageGenerator(output));
 		generator.addProvider(event.includeServer(), new RecipeGenerator(output, lookupProvider));
 		ModBlockTags blockTags = new ModBlockTags(output, lookupProvider, existingFileHelper);
 		generator.addProvider(event.includeServer(), blockTags);
 		generator.addProvider(event.includeServer(), new ModItemTags(output, lookupProvider, blockTags.contentsGetter(), existingFileHelper));
 		generator.addProvider(event.includeServer(), new LootTableGenerator(output, lookupProvider));
+		generator.addProvider(event.includeServer(), new AdvancementGenerator(output, lookupProvider, existingFileHelper));
+		generator.addProvider(event.includeClient(), new LanguageGenerator(output));
 	}
 
 	public static ResourceLocation id(String location)

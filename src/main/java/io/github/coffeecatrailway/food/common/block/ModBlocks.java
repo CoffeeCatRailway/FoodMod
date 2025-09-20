@@ -31,8 +31,8 @@ public class ModBlocks
 	private static final String ID_NAME = "ID";
 
 	private static final Logger LOGGER = LogUtils.getLogger();
-	public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(FoodMod.MODID);
-	public static final DeferredRegister<MapCodec<? extends Block>> CODECS = DeferredRegister.create(BuiltInRegistries.BLOCK_TYPE, FoodMod.MODID);
+	private static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(FoodMod.MODID);
+	private static final DeferredRegister<MapCodec<? extends Block>> CODECS = DeferredRegister.create(BuiltInRegistries.BLOCK_TYPE, FoodMod.MODID);
 
 	public static final Supplier<MapCodec<PineappleCropBlock>> PINEAPPLE_CROP_CODEC = CODECS.register("pineapple_plant", () -> BlockBehaviour.simpleCodec(PineappleCropBlock::new));
 	public static final DeferredBlock<PineappleCropBlock> PINEAPPLE_CROP = register("pineapple_plant", properties -> new PineappleCropBlock(properties

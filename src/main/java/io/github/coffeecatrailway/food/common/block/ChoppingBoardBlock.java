@@ -1,6 +1,8 @@
 package io.github.coffeecatrailway.food.common.block;
 
 import com.mojang.serialization.MapCodec;
+import io.github.coffeecatrailway.food.common.ModStats;
+import io.github.coffeecatrailway.food.common.advancements.ModCriteriaTriggers;
 import io.github.coffeecatrailway.food.common.block.entity.ChoppingBoardBlockEntity;
 import io.github.coffeecatrailway.food.common.block.entity.ModBlockEntities;
 import io.github.coffeecatrailway.food.common.item.crafting.ChoppingBoardRecipe;
@@ -8,6 +10,7 @@ import io.github.coffeecatrailway.food.common.item.crafting.ChoppingBoardRecipeI
 import io.github.coffeecatrailway.food.common.item.crafting.ModRecipes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -121,12 +124,12 @@ public class ChoppingBoardBlock extends BaseEntityBlock implements SimpleWaterlo
 						award = true;
 					}
 				}
-//				if (award)
-//				{
-//					player.awardStat(ModStats.INTERACT_CHOPPING_BOARD);
-//					if (player instanceof ServerPlayer)
-//						ModCriterionTriggers.CHOPPING_BOARD_TRIGGER.trigger((ServerPlayer) player);
-//				}
+				if (award)
+				{
+					player.awardStat(ModStats.INTERACT_CHOPPING_BOARD);
+					if (player instanceof ServerPlayer)
+						ModCriteriaTriggers.CHOPPING_BOARD.get().trigger((ServerPlayer) player);
+				}
 				return InteractionResult.SUCCESS;
 			}
 		}

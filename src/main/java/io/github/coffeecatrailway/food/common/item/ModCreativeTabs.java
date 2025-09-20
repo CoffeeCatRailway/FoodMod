@@ -23,7 +23,7 @@ import java.util.function.Supplier;
 public class ModCreativeTabs
 {
 	private static final Logger LOGGER = LogUtils.getLogger();
-	public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(BuiltInRegistries.CREATIVE_MODE_TAB, FoodMod.MODID);
+	private static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(BuiltInRegistries.CREATIVE_MODE_TAB, FoodMod.MODID);
 
 	public static final Supplier<CreativeModeTab> TAB = CREATIVE_MODE_TABS.register("example", () -> CreativeModeTab.builder()
 			.title(Component.translatable("itemGroup." + FoodMod.MODID + ".tab"))

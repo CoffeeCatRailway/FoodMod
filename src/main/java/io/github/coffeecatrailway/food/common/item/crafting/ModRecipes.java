@@ -20,8 +20,8 @@ import org.slf4j.Logger;
 public class ModRecipes
 {
 	private static final Logger LOGGER = LogUtils.getLogger();
-	public static final DeferredRegister<RecipeType<?>> TYPES = DeferredRegister.create(BuiltInRegistries.RECIPE_TYPE, FoodMod.MODID);
-	public static final DeferredRegister<RecipeSerializer<?>> SERIALIZERS = DeferredRegister.create(BuiltInRegistries.RECIPE_SERIALIZER, FoodMod.MODID);
+	private static final DeferredRegister<RecipeType<?>> TYPES = DeferredRegister.create(BuiltInRegistries.RECIPE_TYPE, FoodMod.MODID);
+	private static final DeferredRegister<RecipeSerializer<?>> SERIALIZERS = DeferredRegister.create(BuiltInRegistries.RECIPE_SERIALIZER, FoodMod.MODID);
 
 	public static final DeferredHolder<RecipeType<?>, RecipeType<ChoppingBoardRecipe>> CHOPPING_BOARD_TYPE = registerType("chopping_board", ChoppingBoardRecipe.class);
 	public static final DeferredHolder<RecipeSerializer<?>, ChoppingBoardRecipe.Serializer> CHOPPING_BOARD_SERIALIZER = SERIALIZERS.register("chopping_board", ChoppingBoardRecipe.Serializer::new);

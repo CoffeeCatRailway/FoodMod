@@ -18,7 +18,7 @@ import org.slf4j.Logger;
 public class ModBlockEntities
 {
 	private static final Logger LOGGER = LogUtils.getLogger();
-	public static final DeferredRegister<BlockEntityType<?>> TYPES = DeferredRegister.create(BuiltInRegistries.BLOCK_ENTITY_TYPE, FoodMod.MODID);
+	private static final DeferredRegister<BlockEntityType<?>> TYPES = DeferredRegister.create(BuiltInRegistries.BLOCK_ENTITY_TYPE, FoodMod.MODID);
 
 	public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ChoppingBoardBlockEntity>> CHOPPING_BOARD = TYPES.register("chopping_board", () -> BlockEntityType.Builder.of(ChoppingBoardBlockEntity::new, ModBlocks.CHOPPING_BOARDS.get().toArray(new ChoppingBoardBlock[0])).build(null));
 

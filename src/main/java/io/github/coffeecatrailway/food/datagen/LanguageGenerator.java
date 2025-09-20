@@ -22,6 +22,7 @@ public class LanguageGenerator extends LanguageProvider
 {
 	public static final Map<Supplier<? extends Item>, String> ITEMS = new HashMap<>();
 	public static final Map<Supplier<? extends Block>, String> BLOCKS = new HashMap<>();
+	public static final Map<String, String> ADVANCEMENTS = new HashMap<>();
 
 	public LanguageGenerator(PackOutput output)
 	{
@@ -62,6 +63,7 @@ public class LanguageGenerator extends LanguageProvider
 
 		ITEMS.forEach(this::addItem);
 		BLOCKS.forEach(this::addBlock);
+		ADVANCEMENTS.forEach(this::add);
 	}
 
 	private void addConfig(ModConfigSpec.ConfigValue<?> config, String name)

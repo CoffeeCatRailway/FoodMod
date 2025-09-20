@@ -14,10 +14,10 @@ public final class FoodConfigs
 	private static final Logger LOGGER = LogUtils.getLogger();
 
 	public static final FoodConfigClient CLIENT;
-	public static final ModConfigSpec CLIENT_CONFIG_SPEC;
+	private static final ModConfigSpec CLIENT_CONFIG_SPEC;
 
 	public static final FoodConfigServer SERVER;
-	public static final ModConfigSpec SERVER_CONFIG_SPEC;
+	private static final ModConfigSpec SERVER_CONFIG_SPEC;
 
 	static
 	{
